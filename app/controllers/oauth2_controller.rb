@@ -21,8 +21,8 @@ class Oauth2Controller < ApplicationController
   def index(client_id: nil, client_secret: nil)
     if session[:user_id] != nil
       #puts session[:user_id]
-      @username      = "bitspilanips@versaclouderp.com"
-      @password      = "BitsPilani123!"
+      # @username      = "bitspilanips@versaclouderp.com"
+      # @password      = "BitsPilani123!"
       @username      = $powerbi_mail
       @password      = $powerbi_password
       ##@refresh_token = refresh_token
