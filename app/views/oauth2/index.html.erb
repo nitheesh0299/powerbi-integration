@@ -1,0 +1,23 @@
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+
+ 
+
+
+<h1>Oauth2#index</h1>
+<p><%= @access_token %> </p>
+<p><%= @username %> </p>
+<p>Find me in app/views/oauth2/index.html.erb</p>
+<%= link_to "Log Out", logout_path %>
+<% if current_user %>
+  <p> Embed Url</p>
+  <% if @urole=="Head" %>
+  <button onclick= "edit()"> Click to edit </button>
+  <% end %>
+  <div id="embedContainer" style="width:1280px ; height:700px;"></div>
+<% else %>
+  <p>Please login/sign up to view this page </p>
+  <%= link_to "Sign Up", signup_path %> or 
+  <%= link_to "Log In", login_path %>
+<% end %>
+<br>
