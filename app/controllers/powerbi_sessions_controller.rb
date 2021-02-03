@@ -33,10 +33,11 @@ class PowerbiSessionsController < ApplicationController
     end
   
     def create
-      
     end
   
     def destroy
-
+    end
+    
+    def report
     end
 end
