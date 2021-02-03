@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   post 'powerbi',to: 'powerbi_sessions#new'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'oauth2', to: 'oauth2#index' , as: 'oauth2'
+  get 'powerbi/report', to: 'powerbi_sessions#report'
 end
