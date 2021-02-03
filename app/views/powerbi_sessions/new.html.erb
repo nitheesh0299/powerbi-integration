@@ -1,15 +1,20 @@
-
-<h1>powerbi credentials</h1>
-<%= form_tag powerbi_path do |form| %>
-  <div class="field">
-    <%= label_tag :email %>
-    <%= text_field_tag :email %>
-  </div>
-  <div class="field">
-    <%= label_tag :password %>
-    <%= password_field_tag :password %>
-  </div>
-  <div class="actions">
-    <%= submit_tag "generate token" %>
-  </div>
+<% if @access_token %>
+  <h1>Acces Token</h1>
+  <p><%= @access_token %> </p>
+  <%= link_to "Open Report by ID" %>
+<% else %>
+  <h1>enter powerbi credentials</h1>
+  <%= form_tag powerbi_path do |form| %>
+    <div class="field">
+      <%= label_tag :email %>
+      <%= text_field_tag :email %>
+    </div>
+    <div class="field">
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+    </div>
+    <div class="actions">
+      <%= submit_tag "generate token" %>
+    </div> 
+  <% end %>
 <% end %>
