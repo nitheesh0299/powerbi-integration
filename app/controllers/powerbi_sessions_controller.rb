@@ -5,6 +5,7 @@ require 'httparty'
 class PowerbiSessionsController < ApplicationController
     BASE_URL   = "https://login.windows.net/9d5463e8-81bb-4342-8242-8e970dcbb974/oauth2/token"
     RESOURCE   = "https://analysis.windows.net/powerbi/api"
+    @@access_token=""
     def new
       if session[:user_id] != nil
         #puts session[:user_id]
@@ -28,11 +29,15 @@ class PowerbiSessionsController < ApplicationController
         #puts "next"
         # puts session[:email_id]
         # puts session[:company_id]
-        @access_token= @array[:access_token]
+        @access_token=@array[:access_token]
+        @@access_token= @array[:access_token]
         end
     end
   
-    def create
+    def embeded_report
+        @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
+        @url = "https://app.powerbi.com/reportEmbed?reportId={{reportID}}"
+        @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
     end
   
     def destroy
@@ -40,8 +45,9 @@ class PowerbiSessionsController < ApplicationController
     
     def report
       @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
-      #@url = "https://api.powerbi.com/v1.0/myorg/reports/#{@reportID}"
-      @url = "https://app.powerbi.com/groups/me/reports/#{@reportID}"
-      @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+    #   @url = "https://api.powerbi.com/v1.0/myorg/reports/#{@reportID}"
+    #   @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+    @url = "https://app.powerbi.com/groups/me/reports/#{@reportID}"
+    @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
     end
 end

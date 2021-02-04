@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'oauth2', to: 'oauth2#index' , as: 'oauth2'
   get 'powerbi/report', to: 'powerbi_sessions#report'
+  get 'powerbi/embed_report', to: 'powerbi_sessions#embed_report'
+
 end
