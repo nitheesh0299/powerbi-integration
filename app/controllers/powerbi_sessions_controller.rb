@@ -39,5 +39,9 @@ class PowerbiSessionsController < ApplicationController
     end
     
     def report
+      @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
+      #@url = "https://api.powerbi.com/v1.0/myorg/reports/#{@reportID}"
+      @url = "https://app.powerbi.com/groups/me/reports/#{@reportID}"
+      @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
     end
 end
