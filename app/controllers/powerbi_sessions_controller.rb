@@ -38,7 +38,7 @@ class PowerbiSessionsController < ApplicationController
         @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
         @url = "https://app.powerbi.com/reportEmbed?reportId={{reportID}}"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
-        render inline: @request
+        #render inline: @request
           # @request="ddf"
     end
   
