@@ -7,7 +7,7 @@ class PowerbiSessionsController < ApplicationController
     RESOURCE   = "https://analysis.windows.net/powerbi/api"
     @@access_token=""
     def new
-      if session[:user_id] != nil
+      #if session[:user_id] == nil
         #puts session[:user_id]
       #   @username      = "bitspilanips@versaclouderp.com"
       #   @password      = "BitsPilani123!"
@@ -31,12 +31,13 @@ class PowerbiSessionsController < ApplicationController
         # puts session[:company_id]
         @access_token=@array[:access_token]
         @@access_token= @array[:access_token]
-        end
+       # end
     end
   
-    def embeded_report
+    def embed_report
         @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
-        @url = "https://app.powerbi.com/reportEmbed?reportId={{reportID}}"
+        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@reportID}"
+        @token = @@access_token
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
     end
   
