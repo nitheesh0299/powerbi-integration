@@ -56,5 +56,6 @@ class PowerbiSessionsController < ApplicationController
     def list_all_report
         @url = "https://api.powerbi.com/v1.0/myorg/reports"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+        @array = @request['value']  
     end
 end
