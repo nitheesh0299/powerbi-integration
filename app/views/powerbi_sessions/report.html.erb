@@ -1,5 +1,58 @@
-<h1>Welcome to Reports</h1>
+<%# <h1>Welcome to Reports</h1>
 
 <p><%= @request %></p>
+ %>
 
 
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+    var models = window['powerbi-client'].models;
+    var embedContainer = $('#embedContainer')[0];
+    console.log(embedContainer);
+
+    var config = {
+        type: 'report',
+        tokenType: models.TokenType.AAD,
+        accessToken: '<%= @token %>',
+        embedUrl: '<%= @url %>',
+        id: '<%= @reportID %>',
+        permissions: models.Permissions.All,
+        settings: {
+            panes: {
+                filters: {
+                    visible: true
+                },
+                pageNavigation: {
+                    visible: true
+                }
+            }
+        }
+    };
+
+    var report = powerbi.embed(embedContainer, config);
+ 
+    report.off("loaded");
+    
+    report.on("loaded", function () {
+        console.log("Loaded");
+    });
+    
+    report.off("rendered");
+    
+    report.on("rendered", function () {
+        console.log("Rendered");
+    });
+    
+    report.on("error", function (event) {
+        console.log(event.detail);
+    
+        report.off("error");
+    });
+}
+</script>
+<h1>  Report </h1> <%= @reportID %>
+<p> <%= @request %> </P>
+
+<div id="embedContainer" style="width:1280px ; height:700px; overflow-y: scroll; overflow-x: scroll"></div>

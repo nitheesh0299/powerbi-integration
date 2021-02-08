@@ -6,8 +6,9 @@ class PowerbiSessionsController < ApplicationController
     BASE_URL   = "https://login.windows.net/9d5463e8-81bb-4342-8242-8e970dcbb974/oauth2/token"
     RESOURCE   = "https://analysis.windows.net/powerbi/api"
     @@access_token=""
+    @@reportID=""
     def new
-      #if session[:user_id] == nil
+      #if session[:user_id] != nil
         #puts session[:user_id]
       #   @username      = "bitspilanips@versaclouderp.com"
       #   @password      = "BitsPilani123!"
@@ -35,8 +36,10 @@ class PowerbiSessionsController < ApplicationController
     end
   
     def embed_report
-        @reportID = "0969feb9-ec39-4dc2-a5e4-5beb1985581c"
-        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@reportID}"
+        @reportID=params[:id]
+        # @@reportID=params[:id][10..-3]
+        @@reportID="0969feb9-ec39-4dc2-a5e4-5beb1985581c"
+        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@@reportID}"
         @token = @@access_token
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
         #render inline: @request
@@ -57,5 +60,9 @@ class PowerbiSessionsController < ApplicationController
         @url = "https://api.powerbi.com/v1.0/myorg/reports"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
         @array = @request['value']  
+        def redirect
+          @@reportID=params[:id]
+          redirect_to powerbi_embed_report_path
+        end
     end
 end
