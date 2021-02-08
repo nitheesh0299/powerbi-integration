@@ -1,0 +1,29 @@
+<h1>List of all Reports</h1>
+
+<br>
+<table border="1">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>webUrl</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @array.each do |array| %>
+      <tr style="border-bottom:1px solid black">
+  <td><%= form_tag powerbi_embed_report_path do |form| %>
+    <div class="field" hidden  >
+      <%= label_tag :id %>
+      <%= text_field_tag :id, :value => array['id'] %>
+    </div>
+      <%= submit_tag array['id'] %>
+  <% end %></td>
+        
+        <td><%= array['name'] %></td>
+        <td><a href=<%= array['webUrl'] %> target="_blank"><%= array['webUrl'] %></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
