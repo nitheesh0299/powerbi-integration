@@ -38,8 +38,8 @@ class PowerbiSessionsController < ApplicationController
     def embed_report
         @reportID=params[:id]
         # @@reportID=params[:id][10..-3]
-        @@reportID="0969feb9-ec39-4dc2-a5e4-5beb1985581c"
-        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@@reportID}"
+        # @@reportID="0969feb9-ec39-4dc2-a5e4-5beb1985581c"
+        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@reportID}"
         @token = @@access_token
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
         #render inline: @request

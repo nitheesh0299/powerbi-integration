@@ -14,10 +14,10 @@
     <% @array.each do |array| %>
       <tr style="border-bottom:1px solid black">
   <td><%= form_tag powerbi_embed_report_path do |form| %>
-    <div class="field" hidden  >
+    <a class="field" hidden>
       <%= label_tag :id %>
-      <%= text_field_tag :id, :value => array['id'] %>
-    </div>
+      <%= text_field_tag :id, array['id'] %>
+    </a>
       <%= submit_tag array['id'] %>
   <% end %></td>
         
