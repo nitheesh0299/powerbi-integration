@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   get 'powerbi/embed_report', to: 'powerbi_sessions#embed_report'
   get 'powerbi/list_all_report', to: 'powerbi_sessions#list_all_report'
   post 'powerbi/embed_report', to: 'powerbi_sessions#embed_report'
-
+  get 'powerbi/list_all_reports', to: 'powerbi_sessions#list_all_reports'
 end

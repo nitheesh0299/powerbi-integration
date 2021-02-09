@@ -7,6 +7,8 @@
   <%= link_to "embeded report",powerbi_embed_report_path %>
   <br/>
   <%= link_to "organisations reports",powerbi_list_all_report_path %>
+  <br/>
+  <%= link_to "organisations reports with dropdown",powerbi_list_all_reports_path %>
 <% else %>
   <h1>enter powerbi credentials</h1>
   <%= form_tag powerbi_path do |form| %>
