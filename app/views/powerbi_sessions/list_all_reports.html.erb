@@ -1,5 +1,11 @@
 <h1>List of all Reports</h1>
 
+<%= form_with json: @array do |f| %>
+    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
+    <%= f.submit %>
+<% end %>
+
+<br>
 <table border="1">
   <thead>
     <tr>

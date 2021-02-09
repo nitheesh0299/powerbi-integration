@@ -60,9 +60,10 @@ class PowerbiSessionsController < ApplicationController
         @url = "https://api.powerbi.com/v1.0/myorg/reports"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
         @array = @request['value']  
-        def redirect
-          @@reportID=params[:id]
-          redirect_to powerbi_embed_report_path
-        end
     end
+    def list_all_reports
+      @url = "https://api.powerbi.com/v1.0/myorg/reports"
+      @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+      @array = @request['value']  
+  end
 end
