@@ -56,14 +56,27 @@ class PowerbiSessionsController < ApplicationController
         @url = "https://app.powerbi.com/groups/me/reports/#{@reportID}"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
     end
+
     def list_all_report
         @url = "https://api.powerbi.com/v1.0/myorg/reports"
         @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
         @array = @request['value']  
     end
+    
     def list_all_reports
-      @url = "https://api.powerbi.com/v1.0/myorg/reports"
-      @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
-      @array = @request['value']  
+      @reportID=params[:id]
+
+      if (@reportID == nil) then
+        @url = "https://api.powerbi.com/v1.0/myorg/reports"
+        @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+        @array = @request['value']
+      else
+        @url = "https://api.powerbi.com/v1.0/myorg/reports"
+        @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{@@access_token}"})
+        @array = @request['value']
+        
+        @url = "https://app.powerbi.com/reportEmbed?reportId=#{@reportID}"
+        @token = @@access_token        
+      end
   end
 end

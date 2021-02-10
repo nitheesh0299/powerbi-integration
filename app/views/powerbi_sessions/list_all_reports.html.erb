@@ -1,11 +1,62 @@
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
+<script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+    var models = window['powerbi-client'].models;
+    var embedContainer = $('#embedContainer')[0];
+    console.log(embedContainer);
+
+    var config = {
+        type: 'report',
+        tokenType: models.TokenType.AAD,
+        accessToken: '<%= @token %>',
+        embedUrl: '<%= @url %>',
+        id: '<%= @reportID %>',
+        permissions: models.Permissions.All,
+        settings: {
+            panes: {
+                filters: {
+                    visible: true
+                },
+                pageNavigation: {
+                    visible: true
+                }
+            }
+        }
+    };
+
+    var report = powerbi.embed(embedContainer, config);
+ 
+    report.off("loaded");
+    
+    report.on("loaded", function () {
+        console.log("Loaded");
+    });
+    
+    report.off("rendered");
+    
+    report.on("rendered", function () {
+        console.log("Rendered");
+    });
+    
+    report.on("error", function (event) {
+        console.log(event.detail);
+    
+        report.off("error");
+    });
+}
+</script>
+
 <h1>List of all Reports</h1>
+
 <div class="field">
-<%= form_with local: true, :url => powerbi_embed_report_path do |f| %>
+<%= form_with local: true, :url => powerbi_list_all_reports_path do |f| %>
     <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
     <%= f.submit "Open Report"%>
 <% end %>
 </div>
 <br>
+
 <table border="1">
   <thead>
     <tr>
@@ -18,7 +69,7 @@
   <tbody>
     <% @array.each do |array| %>
       <tr style="border-bottom:1px solid black">
-  <td><%= form_tag powerbi_embed_report_path do |form| %>
+  <td><%= form_tag powerbi_list_all_reports_path do |form| %>
     <a class="field" hidden>
       <%= label_tag :id %>
       <%= text_field_tag :id, array['id'] %>
@@ -32,3 +83,5 @@
     <% end %>
   </tbody>
 </table>
+
+<div id="embedContainer" style="width:1280px ; height:700px; overflow-y: scroll; overflow-x: scroll"></div>
