@@ -1,6 +1,6 @@
-<% if @access_token %>
-  <h1>Access Token</h1>
-  <p><%= @access_token %> </p>
+<% if session[:access_token] %>
+  <h1>Power BI</h1>
+  <p><%= "Authorization Successful! You are now in Power BI." %> </p>
   <br/>
   <%= link_to "Open Report by ID",powerbi_report_path %>
   <br/>

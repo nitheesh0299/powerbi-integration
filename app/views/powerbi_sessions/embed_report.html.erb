@@ -9,7 +9,7 @@ window.onload = function () {
     var config = {
         type: 'report',
         tokenType: models.TokenType.AAD,
-        accessToken: '<%= @token %>',
+        accessToken: '<%= session[:access_token] %>',
         embedUrl: '<%= @url %>',
         id: '<%= @reportID %>',
         permissions: models.Permissions.All,
@@ -49,4 +49,4 @@ window.onload = function () {
 <h1> Embedded Report </h1> <%= @reportID %>
 <!--p> <%= @request %> </P-->
 
-<div id="embedContainer" style="width:1280px ; height:700px; overflow-y: scroll; overflow-x: scroll"></div>
+<div id="embedContainer" style="width:1280px ; height:700px; overflow-y: auto; overflow-x: auto"></div>

@@ -1,5 +1,8 @@
 <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
 <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript">
 window.onload = function () {
     var models = window['powerbi-client'].models;
@@ -9,7 +12,7 @@ window.onload = function () {
     var config = {
         type: 'report',
         tokenType: models.TokenType.AAD,
-        accessToken: '<%= @token %>',
+        accessToken: '<%= session[:access_token] %>',
         embedUrl: '<%= @url %>',
         id: '<%= @reportID %>',
         permissions: models.Permissions.All,
@@ -44,6 +47,8 @@ window.onload = function () {
     
         report.off("error");
     });
+    $('#embedContainer').resizable();
+    $('#embedContainer').draggable(); 
 }
 </script>
 
@@ -84,4 +89,4 @@ window.onload = function () {
   </tbody>
 </table>
 
-<div id="embedContainer" style="width:1280px ; height:700px; overflow-y: scroll; overflow-x: scroll"></div>
+<div id="embedContainer" style ="width:1280px ; height:700px; overflow-y: auto; overflow-x: auto"></div>
