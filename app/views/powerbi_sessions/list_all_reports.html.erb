@@ -42,10 +42,10 @@ window.onload = function () {
         console.log(event.detail);    
         report.off("error");
     });
-    $('#embedContainer').dialog();
-    $('#embedContainer').click(function(){
-      alert("clicked test");
-    });
+//    $('#embedContainer').dialog();
+//    $('#embedContainer').click(function(){
+//      alert("clicked test");
+//    });
 
     var embedContainer2 = $('#embedContainer2')[0];
     console.log(embedContainer2);
@@ -80,10 +80,10 @@ window.onload = function () {
         console.log(event.detail);    
         report.off("error");
     });
-    $('#embedContainer2').dialog();
-    $('#embedContainer2').click(function(){
-      alert("clicked test");
-    });
+//    $('#embedContainer2').dialog();
+//    $('#embedContainer2').click(function(){
+//      alert("clicked test");
+//    });
 
     var embedContainer3 = $('#embedContainer3')[0];
     console.log(embedContainer3);
@@ -118,10 +118,10 @@ window.onload = function () {
         console.log(event.detail);    
         report.off("error");
     });
-    $('#embedContainer3').dialog();
-    $('#embedContainer3').click(function(){
-      alert("clicked test");
-    });
+//    $('#embedContainer3').dialog();
+//    $('#embedContainer3').click(function(){
+//      alert("clicked test");
+//    });
 </script>
 
 <h1>List of all Reports</h1>
@@ -161,13 +161,8 @@ window.onload = function () {
   </tbody>
 </table>
 
-<div class="container">
-  <div id="embedContainer" ></div>
-  <div id="embedContainer2" ></div>
-  <div id="embedContainer3" ></div>
+<div style="width: 450px;">
+  <div style="float: left; width: 150px;" id="embedContainer" ></div>
+  <div style="float: left; width: 150px;" id="embedContainer2" ></div>
+  <div style="float: left; width: 150px;" id="embedContainer3" ></div>
 </div>
-
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* fraction*/
-}
