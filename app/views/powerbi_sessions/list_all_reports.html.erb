@@ -6,49 +6,57 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-window.onload = function () {
-    var models = window['powerbi-client'].models;
+  window.onload = function () {
+      var models = window['powerbi-client'].models;
+      var embedContainer = $('#embedContainer')[0];
+      console.log(embedContainer);
 
-    var embedContainer = $('#embedContainer')[0];
-    console.log(embedContainer);
-    var config = {
-        type: 'report',
-        tokenType: models.TokenType.AAD,
-        accessToken: '<%= session[:access_token] %>',
-        embedUrl: '<%= @url %>',
-        id: '<%= @reportID %>',
-        permissions: models.Permissions.All,
-        settings: {
-            panes: {
-                filters: {
-                    visible: false
-                },
-                pageNavigation: {
-                    visible: true
-                }
-            }
-        }
-    };
-    var report = powerbi.embed(embedContainer, config);
-    report.off("loaded");    
-    report.on("loaded", function () {
-        console.log("Loaded");
-    });    
-    report.off("rendered");    
-    report.on("rendered", function () {
-        console.log("Rendered");
-    });    
-    report.on("error", function (event) {
-        console.log(event.detail);    
-        report.off("error");
-    });
-//    $('#embedContainer').dialog();
-//    $('#embedContainer').click(function(){
-//      alert("clicked test");
-//    });
+      var config = {
+          type: 'report',
+          tokenType: models.TokenType.AAD,
+          accessToken: '<%= session[:access_token] %>',
+          embedUrl: '<%= @url %>',
+          id: '<%= @reportID %>',
+          permissions: models.Permissions.All,
+          settings: {
+              panes: {
+                  filters: {
+                      visible: false
+                  },
+                  pageNavigation: {
+                      visible: true
+                  }
+              }
+          }
+      };
 
-    var embedContainer2 = $('#embedContainer2')[0];
+      var report = powerbi.embed(embedContainer, config);
+  
+      report.off("loaded");
+      
+      report.on("loaded", function () {
+          console.log("Loaded");
+      });
+      
+      report.off("rendered");
+      
+      report.on("rendered", function () {
+          console.log("Rendered");
+      });
+      
+      report.on("error", function (event) {
+          console.log(event.detail);
+      
+          report.off("error");
+      });
+      
+      $('#embedContainer').click(function(){
+        $('#embedContainer').dialog();
+      });
+
+      var embedContainer2 = $('#embedContainer2')[0];
     console.log(embedContainer2);
+
     var config2 = {
         type: 'report',
         tokenType: models.TokenType.AAD,
@@ -67,61 +75,70 @@ window.onload = function () {
             }
         }
     };
+
     var report2 = powerbi.embed(embedContainer2, config2);
-    report2.off("loaded");    
+ 
+    report2.off("loaded");
+    
     report2.on("loaded", function () {
         console.log("Loaded");
-    });    
-    report2.off("rendered");    
+    });
+    
+    report2.off("rendered");
+    
     report2.on("rendered", function () {
         console.log("Rendered");
-    });    
+    });
+    
     report2.on("error", function (event) {
-        console.log(event.detail);    
-        report.off("error");
+        console.log(event.detail);
+    
+        report2.off("error");
     });
-//    $('#embedContainer2').dialog();
-//    $('#embedContainer2').click(function(){
-//      alert("clicked test");
-//    });
 
-    var embedContainer3 = $('#embedContainer3')[0];
-    console.log(embedContainer3);
-    var config3 = {
-        type: 'report',
-        tokenType: models.TokenType.AAD,
-        accessToken: '<%= session[:access_token] %>',
-        embedUrl: '<%= @url %>',
-        id: '<%= @reportID %>',
-        permissions: models.Permissions.All,
-        settings: {
-            panes: {
-                filters: {
-                    visible: false
-                },
-                pageNavigation: {
-                    visible: true
-                }
-            }
-        }
-    };
-    var report3 = powerbi.embed(embedContainer3, config3);
-    report3.off("loaded");    
-    report3.on("loaded", function () {
-        console.log("Loaded");
-    });    
-    report3.off("rendered");    
-    report3.on("rendered", function () {
-        console.log("Rendered");
-    });    
-    report3.on("error", function (event) {
-        console.log(event.detail);    
-        report.off("error");
-    });
-//    $('#embedContainer3').dialog();
-//    $('#embedContainer3').click(function(){
-//      alert("clicked test");
-//    });
+
+  var embedContainer3 = $('#embedContainer3')[0];
+      console.log(embedContainer3);
+
+      var config3 = {
+          type: 'report',
+          tokenType: models.TokenType.AAD,
+          accessToken: '<%= session[:access_token] %>',
+          embedUrl: '<%= @url %>',
+          id: '<%= @reportID %>',
+          permissions: models.Permissions.All,
+          settings: {
+              panes: {
+                  filters: {
+                      visible: false
+                  },
+                  pageNavigation: {
+                      visible: true
+                  }
+              }
+          }
+      };
+
+      var report3 = powerbi.embed(embedContainer3, config3);
+  
+      report3.off("loaded");
+      
+      report3.on("loaded", function () {
+          console.log("Loaded");
+      });
+      
+      report3.off("rendered");
+      
+      report3.on("rendered", function () {
+          console.log("Rendered");
+      });
+      
+      report3.on("error", function (event) {
+          console.log(event.detail);
+      
+          report3.off("error");
+      });
+  }
 </script>
 
 <h1>List of all Reports</h1>
@@ -160,9 +177,9 @@ window.onload = function () {
     <% end %>
   </tbody>
 </table>
+<div id="embedContainer"  style="float: left; width: 200px;"></div>
+<div id="embedContainer2" style="float: left; width: 200px;" ></div>
+<div id="embedContainer3" style="float: left; width: 200px;"></div>
 
-<div style="width: 450px;">
-  <div style="float: left; width: 150px;" id="embedContainer" ></div>
-  <div style="float: left; width: 150px;" id="embedContainer2" ></div>
-  <div style="float: left; width: 150px;" id="embedContainer3" ></div>
-</div>
+
+
