@@ -8,9 +8,9 @@
 <script type="text/javascript">
 window.onload = function () {
     var models = window['powerbi-client'].models;
+
     var embedContainer = $('#embedContainer')[0];
     console.log(embedContainer);
-
     var config = {
         type: 'report',
         tokenType: models.TokenType.AAD,
@@ -21,7 +21,7 @@ window.onload = function () {
         settings: {
             panes: {
                 filters: {
-                    visible: true
+                    visible: false
                 },
                 pageNavigation: {
                     visible: true
@@ -29,30 +29,99 @@ window.onload = function () {
             }
         }
     };
-
     var report = powerbi.embed(embedContainer, config);
- 
-    report.off("loaded");
-    
+    report.off("loaded");    
     report.on("loaded", function () {
         console.log("Loaded");
-    });
-    
-    report.off("rendered");
-    
+    });    
+    report.off("rendered");    
     report.on("rendered", function () {
         console.log("Rendered");
-    });
-    
+    });    
     report.on("error", function (event) {
-        console.log(event.detail);
-    
+        console.log(event.detail);    
         report.off("error");
     });
     $('#embedContainer').dialog();
     $('#embedContainer').click(function(){
-  alert("clicked test");
-}
+      alert("clicked test");
+    });
+
+    var embedContainer2 = $('#embedContainer2')[0];
+    console.log(embedContainer2);
+    var config2 = {
+        type: 'report',
+        tokenType: models.TokenType.AAD,
+        accessToken: '<%= session[:access_token] %>',
+        embedUrl: '<%= @url %>',
+        id: '<%= @reportID %>',
+        permissions: models.Permissions.All,
+        settings: {
+            panes: {
+                filters: {
+                    visible: false
+                },
+                pageNavigation: {
+                    visible: true
+                }
+            }
+        }
+    };
+    var report2 = powerbi.embed(embedContainer2, config2);
+    report2.off("loaded");    
+    report2.on("loaded", function () {
+        console.log("Loaded");
+    });    
+    report2.off("rendered");    
+    report2.on("rendered", function () {
+        console.log("Rendered");
+    });    
+    report2.on("error", function (event) {
+        console.log(event.detail);    
+        report.off("error");
+    });
+    $('#embedContainer2').dialog();
+    $('#embedContainer2').click(function(){
+      alert("clicked test");
+    });
+
+    var embedContainer3 = $('#embedContainer3')[0];
+    console.log(embedContainer3);
+    var config3 = {
+        type: 'report',
+        tokenType: models.TokenType.AAD,
+        accessToken: '<%= session[:access_token] %>',
+        embedUrl: '<%= @url %>',
+        id: '<%= @reportID %>',
+        permissions: models.Permissions.All,
+        settings: {
+            panes: {
+                filters: {
+                    visible: false
+                },
+                pageNavigation: {
+                    visible: true
+                }
+            }
+        }
+    };
+    var report3 = powerbi.embed(embedContainer3, config3);
+    report3.off("loaded");    
+    report3.on("loaded", function () {
+        console.log("Loaded");
+    });    
+    report3.off("rendered");    
+    report3.on("rendered", function () {
+        console.log("Rendered");
+    });    
+    report3.on("error", function (event) {
+        console.log(event.detail);    
+        report.off("error");
+    });
+    $('#embedContainer3').dialog();
+    $('#embedContainer3').click(function(){
+      alert("clicked test");
+    });
 </script>
 
 <h1>List of all Reports</h1>
@@ -92,4 +161,13 @@ window.onload = function () {
   </tbody>
 </table>
 
-<div id="embedContainer" ></div>
+<div class="container">
+  <div id="embedContainer" ></div>
+  <div id="embedContainer2" ></div>
+  <div id="embedContainer3" ></div>
+</div>
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+}
