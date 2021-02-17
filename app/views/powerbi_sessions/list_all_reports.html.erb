@@ -51,7 +51,8 @@
       });
       
       $('#embedContainer').click(function(){
-        $('#embedContainer').clone().appendTo('#embedContainer4').dialog();
+        var report4 = powerbi.embed(embedContainer4, config);
+        $('#embedContainer4').dialog();
       });
 
       var embedContainer2 = $('#embedContainer2')[0];
