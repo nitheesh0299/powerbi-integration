@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 gem 'httparty', '~> 0.13.7'
 gem 'wdm', '>= 0.1.0'
+gem 'activerecord-session_store'
 #gem 'rack-cors', :require => 'rack/cors'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
