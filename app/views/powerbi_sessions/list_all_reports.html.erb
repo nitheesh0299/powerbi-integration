@@ -143,21 +143,6 @@
 
 <h1>List of all Reports</h1>
 
-<div class="field">
-<%= form_with local: true, :url => powerbi_list_all_reports_path do |f| %>
-    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
-    <%= f.submit "Open Report"%>
-<% end %>
-</div>
-<br>
-
-<div id="embedContainer"  style="float: left; width: 200px;"></div>
-<div id="embedContainer2" style="float: left; width: 200px;" ></div>
-<div id="embedContainer3" style="float: left; width: 200px;"></div>
-
-<br>
-<br>
-
 <table border="1">
   <thead>
     <tr>
@@ -185,5 +170,19 @@
   </tbody>
 </table>
 
+<br>
 
+<div class="field">
+    <%= form_with local: true, :url => powerbi_list_all_reports_path do |f| %>
+        <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
+        <%= f.submit "Open Report"%>
+    <% end %>
+</div>
+<br>
+    
+<div id="embedContainer"  style="float: left; width: 200px;"></div>
+<div id="embedContainer2" style="float: left; width: 200px;" ></div>
+<div id="embedContainer3" style="float: left; width: 200px;"></div>
+    
+    
 
