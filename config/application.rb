@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module BiIntegration
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+     config.load_defaults 6.0
     config.session_store :active_record_store,
       :key => '_redmine_session'
     # Settings in config/environments/* take precedence over those specified here.
