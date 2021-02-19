@@ -17,4 +17,9 @@ Rails.application.routes.draw do
   post 'powerbi/embed_report', to: 'powerbi_sessions#embed_report'
   get 'powerbi/list_all_reports', to: 'powerbi_sessions#list_all_reports'
   post 'powerbi/list_all_reports', to: 'powerbi_sessions#list_all_reports'
+  get 'groups/createNewGroup', to: 'groups#createNewGroup'
+  post 'groups/createNewGroup', to: 'groups#createNewGroup'
+  get 'groups/getAllGroups', to: 'groups#getAllGroups'
+  get 'groups/getGroupUsers', to: 'groups#getGroupUsers'
+
 end
