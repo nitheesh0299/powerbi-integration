@@ -11,7 +11,7 @@
   <tbody>
    <% @array.each do |array| %>
       <tr style="border-bottom:1px solid black">
-          <td><%= form_tag groups_getGroupUsers_path do |form| %>
+          <td><%= form_tag groups_getAllGroups_path do |form| %>
             <a class="field" hidden>
               <%= label_tag :id %>
               <%= text_field_tag :id, array['id'] %>

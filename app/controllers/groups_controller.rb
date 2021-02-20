@@ -12,13 +12,14 @@ class GroupsController < ApplicationController
     @array = @request['value']
 
     @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
-    # if(params[:id]==nil)
-    # {
-    #     @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
-    # }
-    # else{
-    #   @groupID=params[:id]
-    # }
+    
+    if(params[:id]==nil)
+    {
+        @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
+    }
+    else{
+      @groupID=params[:id]
+    }
    
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/users"
     @request1 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
