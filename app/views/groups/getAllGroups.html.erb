@@ -1,6 +1,6 @@
 <h1>Groups</h1>
 
-<table border="1">
+<table border="1" style="float: left;  margin-right: 200px">
   <thead>
     <tr>
       <th>Group_id</th>
@@ -9,5 +9,55 @@
   </thead>
 
   <tbody>
+   <% @array.each do |array| %>
+      <tr style="border-bottom:1px solid black">
+          <td><%= form_tag groups_getAllGroups_path do |form| %>
+            <a class="field" hidden>
+              <%= label_tag :id %>
+              <%= text_field_tag :id, array['id'] %>
+            </a>
+              <%= submit_tag array['id'] %>
+          <% end %></td>
+          <td><%= array['name'] %></td>
+    <% end %>
     
   </tbody>
+
+  <table border="1" >
+  <thead>
+    <tr>
+      <th>User name </th>
+      <th>group user access rights</th>
+    </tr>
+  </thead>
+
+  <tbody>
+     <% @userArray.each do |userArray| %>
+     <tr>
+        <td><%= userArray['displayName'] %></td>
+        <td><%= userArray['groupUserAccessRight'] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <% if(@reportArray!=nil)%>
+    <thead>
+      <tr>
+        <th>report name </th>
+        <th>report id</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @reportArray.each do |reportArray| %>
+      <tr>
+        <td><%=reportArray['name'] %></td>
+        <td><%= reportArray['id'] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+
+<table>
+<br>
+

@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get 'groups/createNewGroup', to: 'groups#createNewGroup'
   post 'groups/createNewGroup', to: 'groups#createNewGroup'
   get 'groups/getAllGroups', to: 'groups#getAllGroups'
+  post 'groups/getAllGroups', to: 'groups#getAllGroups'
   get 'groups/getGroupUsers', to: 'groups#getGroupUsers'
+  post 'groups/getGroupUsers', to: 'groups#getGroupUsers'
+  get 'groups', to: 'groups#index'
+  
 
 end
