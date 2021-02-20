@@ -3,15 +3,19 @@
 <table border="1">
   <thead>
     <tr>
-      <th>Group_id</th>
-      <th>Group_name</th>
-      <th>User_id</th>
-      <th>User_name</th>
-
+      <th>User name </th>
+      <th>group user access rights</th>
     </tr>
   </thead>
 
   <tbody>
-        
-    
+     <% @array.each do |array| %>
+      <tr>
+      <td><%= array['displayName'] %></td>
+      <td><%= array['groupUserAccessRight'] %></td>
+      </tr>
+    <% end %>
   </tbody>
+<table>
+
+<p><%=@request%></p>
