@@ -1,6 +1,6 @@
 <h1>Groups</h1>
 
-<table border="1">
+<table border="1" style="float: left;  margin-right: 200px">
   <thead>
     <tr>
       <th>Group_id</th>
@@ -23,7 +23,7 @@
     
   </tbody>
 
-  <table border="1">
+  <table border="1" >
   <thead>
     <tr>
       <th>User name </th>
@@ -34,8 +34,8 @@
   <tbody>
      <% @userArray.each do |userArray| %>
      <tr>
-      <td><%= userArray['displayName'] %></td>
-      <td><%= userArray['groupUserAccessRight'] %></td>
+        <td><%= userArray['displayName'] %></td>
+        <td><%= userArray['groupUserAccessRight'] %></td>
       </tr>
     <% end %>
   </tbody>
@@ -50,13 +50,14 @@
 
     <tbody>
       <% @reportArray.each do |reportArray| %>
-        <tr><%=reportArray["name"] %></td>
+      <tr>
+        <td><%=reportArray['name'] %></td>
         <td><%= reportArray['id'] %></td>
+      </tr>
       <% end %>
     </tbody>
   <% end %>
 
 <table>
+<br>
 
-
-<p><%=@request%></p>
