@@ -50,9 +50,17 @@
           report.off("error");
       });
       
-      $('#embedContainer').click(function(){
-        $('#embedContainer').dialog();
-      });
+      $(function(){  
+            $("#embedContainer").click(function() {  
+                var report4 = powerbi.embed(embedContainer4, config);
+
+               ($("#embedContainer4").dialog("isOpen") == false) ? $("#embedContainer4").dialog("open") : $("#embedContainer4").dialog("close") ;  
+            });  
+            $("#embedContainer4").dialog({autoOpen: false});  
+         });  
+
+
+
 
       var embedContainer2 = $('#embedContainer2')[0];
     console.log(embedContainer2);
@@ -180,9 +188,8 @@
 </div>
 <br>
     
-<div id="embedContainer"  style="float: left; width: 200px;"></div>
-<div id="embedContainer2" style="float: left; width: 200px;" ></div>
+<div id="embedContainer"  style="float: left; width: 200px; margin-right: 20px"></div>
+<div id="embedContainer2" style="float: left; width: 200px; margin-right: 20px" ></div>
 <div id="embedContainer3" style="float: left; width: 200px;"></div>
-    
-    
 
+<div id="embedContainer4" style="float: left; width: 200px;"></div>

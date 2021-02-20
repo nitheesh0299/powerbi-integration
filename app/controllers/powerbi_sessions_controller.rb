@@ -5,7 +5,7 @@ require 'httparty'
 class PowerbiSessionsController < ApplicationController
     BASE_URL   = "https://login.windows.net/9d5463e8-81bb-4342-8242-8e970dcbb974/oauth2/token"
     RESOURCE   = "https://analysis.windows.net/powerbi/api"
-    @@access_token=""
+    # @@access_token=""
     # @@reportID=""
     def new
       #if session[:user_id] != nil
@@ -65,6 +65,7 @@ class PowerbiSessionsController < ApplicationController
     end
     
     def list_all_reports
+
       @reportID=params[:id]
 
       if (@reportID == nil) then
@@ -79,5 +80,6 @@ class PowerbiSessionsController < ApplicationController
         @url = "https://app.powerbi.com/reportEmbed?reportId=#{@reportID}"
         # @token = session[:access_token]        
       end
-  end
+    end
+
 end

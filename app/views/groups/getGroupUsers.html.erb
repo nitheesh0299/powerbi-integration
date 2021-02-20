@@ -1,0 +1,21 @@
+<h1>Groups and users</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>User name </th>
+      <th>group user access rights</th>
+    </tr>
+  </thead>
+
+  <tbody>
+     <% @array.each do |array| %>
+      <tr>
+      <td><%= array['displayName'] %></td>
+      <td><%= array['groupUserAccessRight'] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+<table>
+
+<p><%=@request%></p>
