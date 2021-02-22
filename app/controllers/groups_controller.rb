@@ -26,6 +26,8 @@ class GroupsController < ApplicationController
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/reports"
     @request2 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @reportArray = @request2['value']  
+
+    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT company_name, username FROM powerbi_users")
   end
 
   def getGroupUsers

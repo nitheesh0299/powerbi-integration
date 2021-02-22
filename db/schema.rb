@@ -15,6 +15,14 @@ ActiveRecord::Schema.define(version: 2021_02_14_085630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "powerbi_users", id: false, force: :cascade do |t|
+    t.string "company_name", limit: 255
+    t.integer "firm_id"
+    t.string "username", limit: 255
+    t.string "hashed_password", limit: 255
+    t.string "group_id", limit: 255
+  end
+
   create_table "rdids", force: :cascade do |t|
     t.string "reportId"
     t.string "datasetId"
