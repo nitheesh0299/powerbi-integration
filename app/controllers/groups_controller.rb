@@ -27,7 +27,7 @@ class GroupsController < ApplicationController
     @request2 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @reportArray = @request2['value']  
 
-    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT company_name, username FROM powerbi_users")
+    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT parties.company_name, users.username, users.group_id FROM powerbi_users users left join parties ON users.firm_id = parties.firm_id")
   end
 
   def getGroupUsers

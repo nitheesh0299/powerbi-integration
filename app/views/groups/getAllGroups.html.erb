@@ -91,6 +91,9 @@ tr:hover            { background-color: #b3c7dc;}
 
   <tbody>
     <% @powerbi_users.values.each do |powerbi_users| %>
+    <% powerbi_users[0].nil?
+        powerbi_users[0] = "Versa"
+    %>
     <tr>
       <td><%=powerbi_users[0]%></td>
       <td><%=powerbi_users[1]%></td>
