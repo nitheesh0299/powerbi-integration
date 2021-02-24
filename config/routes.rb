@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'groups/getGroupUsers', to: 'groups#getGroupUsers'
   post 'groups/getGroupUsers', to: 'groups#getGroupUsers'
   get 'groups', to: 'groups#index'
+  get 'groups/createNewUser', to:'groups#createNewUser'
   
 
 end

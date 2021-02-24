@@ -1,0 +1,30 @@
+  <h1> Create new PowerBI user </h1>
+  <%= form_tag groups_createNewUser_path do |form| %>
+      <div class="field">
+        <%= form.label :Group_name  %>
+        <%= form_with local: true do |f| %>
+          <%= f.select :groupId, @array.map { |array| [array['name'], array['id']]} %>
+        <% end %>
+      </div>
+      <div class="field">
+          <%= form.label :User_name %>
+          <%= form.text_field :username%>
+      </div>
+      <div class="field">
+          <%= form.label :email %>
+          <%= form.text_field :email%>
+      </div>
+      <div class="field">
+          <%= form.label :accessrights %>
+          <%= select_tag(:accessrights,options_for_select([['None', 'None'],['Admin', 'Admin'], ['Viewer', 'Viewer'],['Contributor', 'Contributor'],['Member', 'Member']])) %>
+      </div>
+      <div class="field">
+          <%= form.label :Principal_Type  %>
+          <%= select_tag(:accessrights,options_for_select([['App','App'],['Group','Group'],['User','User']]))%>
+      </div>
+      <div class="actions">
+          <%= form.submit "create PowerBi user" %>
+      </div>
+  <% end %>
+
+  <p><%=response%>% </p>

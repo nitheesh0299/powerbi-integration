@@ -1,2 +1,3 @@
 class PowerbiUser < ApplicationRecord
+    
 end

@@ -3,7 +3,7 @@
 body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
 table{
    overflow-y:auto;
-   width: 378px;
+   width: 400px;
    height:400px;
    display:block;
 }
@@ -16,7 +16,7 @@ tr:nth-child(even)	{ background-color:#fff; }
 
 tr:hover            { background-color: #b3c7dc;}
 </style>
-<h1>Groups</h1>
+<h1>Power BI Groups</h1>
 
 <table border="1" style="float: left;  margin-right: 200px">
   <thead>
@@ -42,6 +42,35 @@ tr:hover            { background-color: #b3c7dc;}
   </tbody>
 </table>
 
+<table border="1">
+  <thead>  
+    <tr>
+        <th>Company name</th>
+        <th>PowerBI User name</th>
+        <th>Group Id</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @powerbi_users.values.each do |powerbi_users| %>
+    <% powerbi_users[0].nil?
+        powerbi_users[0] = "Versa"
+    %>
+    <tr>
+      <td><%=powerbi_users[0]%></td>
+      <td><%=powerbi_users[1]%></td>
+      <td> <div class="field">
+                <%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
+                    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
+                    <%= f.submit "Apply"%>
+                <% end %>
+            </div> </td>
+      </tr>
+    <% end %>
+    </tbody>
+</table>
+<br>
+<br>
 <table border="1" >
   <thead>
     <tr>
@@ -80,31 +109,8 @@ tr:hover            { background-color: #b3c7dc;}
 </table>
 <br>
 
-<table border="1">
-  <thead>  
-    <tr>
-        <th>Company name</th>
-        <th>User name</th>
-        <th>Group Id</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @powerbi_users.values.each do |powerbi_users| %>
-    <% powerbi_users[0].nil?
-        powerbi_users[0] = "Versa"
-    %>
-    <tr>
-      <td><%=powerbi_users[0]%></td>
-      <td><%=powerbi_users[1]%></td>
-      <td> <div class="field">
-                <%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
-                    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
-                    <%= f.submit "Apply"%>
-                <% end %>
-            </div> </td>
-      </tr>
-    <% end %>
-    </tbody>
-</table>
-<br>
+<div id="createUser">
+  <%= link_to "Create New PowerBI User",groups_createNewUser_path %>
+</div>
+
