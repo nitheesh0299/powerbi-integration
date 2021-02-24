@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_085630) do
+ActiveRecord::Schema.define(version: 2021_02_23_121805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "parties", id: false, force: :cascade do |t|
+    t.integer "firm_id"
+    t.string "company_name", limit: 255
+  end
+
+  create_table "powerbi_users", force: :cascade do |t|
+    t.string "company_name"
+    t.string "username"
+    t.string "email"
+    t.string "hashed_password"
+    t.integer "firm_id"
+    t.string "role"
+    t.string "group_id"
+  end
 
   create_table "rdids", force: :cascade do |t|
     t.string "reportId"
@@ -32,14 +47,10 @@ ActiveRecord::Schema.define(version: 2021_02_14_085630) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "companyId"
-    t.string "role"
-    t.index ["email"], name: "index_users_on_email", unique: true
+  create_table "users", id: false, force: :cascade do |t|
+    t.integer "firm_id"
+    t.string "username", limit: 255
+    t.string "hashed_password", limit: 255
   end
 
 end

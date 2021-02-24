@@ -1,3 +1,21 @@
+<style>
+
+body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+table{
+   overflow-y:auto;
+   width: 378px;
+   height:400px;
+   display:block;
+}
+th {
+  background-color: #015a9e;
+  color: #fff;
+}
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)	{ background-color:#fff; }
+
+tr:hover            { background-color: #b3c7dc;}
+</style>
 <h1>Groups</h1>
 
 <table border="1" style="float: left;  margin-right: 200px">
@@ -22,8 +40,9 @@
     <% end %>
     
   </tbody>
+</table>
 
-  <table border="1" >
+<table border="1" >
   <thead>
     <tr>
       <th>User name </th>
@@ -58,6 +77,34 @@
     </tbody>
   <% end %>
 
-<table>
+</table>
 <br>
 
+<table border="1">
+  <thead>  
+    <tr>
+        <th>Company name</th>
+        <th>User name</th>
+        <th>Group Id</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @powerbi_users.values.each do |powerbi_users| %>
+    <% powerbi_users[0].nil?
+        powerbi_users[0] = "Versa"
+    %>
+    <tr>
+      <td><%=powerbi_users[0]%></td>
+      <td><%=powerbi_users[1]%></td>
+      <td> <div class="field">
+                <%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
+                    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
+                    <%= f.submit "Apply"%>
+                <% end %>
+            </div> </td>
+      </tr>
+    <% end %>
+    </tbody>
+</table>
+<br>
