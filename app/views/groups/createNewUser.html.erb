@@ -1,10 +1,12 @@
   <h1> Create new PowerBI user </h1>
-  <%= form_with do |form| %>
+  <%= form_with local: true do |form| %>
       <div class="field">
         <%= form.label :Group_name  %>
-        <%= form_with local: true do |f| %>
-          <%= f.select :groupId, @array.map { |array| [array['name'], array['id']]} %>
-        <% end %>
+        <%= form.select :groupId, @array.map { |array| [array['name'], array['id']]} %>
+      </div>
+        <div class="field">
+        <%= form.label :company_name  %>
+        <%= form.select :companyId, @company_name.map { |company_name| [company_name['company_name'], company_name['firm_id']]} %>
       </div>
       <div class="field">
           <%= form.label :User_name %>

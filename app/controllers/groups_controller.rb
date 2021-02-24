@@ -27,8 +27,7 @@ class GroupsController < ApplicationController
     @request2 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @reportArray = @request2['value']  
 
-    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT parties.name, users.username, users.group_id FROM powerbi_users users left join parties ON users.firm_id = parties.firm_id")
-    
+    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT parties.company_name, users.username, users.group_id FROM powerbi_users users left join parties ON users.firm_id = parties.firm_id")
     groupId=params[:groupId]
     @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
     response=HTTParty.post(@url,
@@ -48,6 +47,9 @@ class GroupsController < ApplicationController
   def createNewGroup
   end
   def createNewUser
+    @PowerbiUser = PowerbiUser.new(username: params[:username], group_id: params[:groupId], firm_id: params[:companyId], email: params[:email], role: params[:accessrights] )
+    @PowerbiUser.save
+    @company_name = ActiveRecord::Base.connection.execute("SELECT parties.company_name, parties.firm_id FROM parties")
     @accessRightsArray=["Admin","Contributor","Member","Viewer"]
     @principalTypeArray=["App","Group","User"]
     @url = "https://api.powerbi.com/v1.0/myorg/groups"
