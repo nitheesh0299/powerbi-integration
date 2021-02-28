@@ -17,16 +17,13 @@ class GroupsController < ApplicationController
       @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
     end
 
-    if(params[:group_id]!=nil)
+    if(params[:group_id]!=nil && params[:user_id]!=nil)
       @updated_groupID=params[:group_id]    
-    end
+      @updated_userID=params[:user_id]
 
-    if(params[:user_id]!=nil)
-      @updated_userID=params[:user_id]    
+      #@PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id="+@updated_groupID+" where username="+@userID)
+      #@PowerbiUser.save
     end
-
-    #@PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id="+@updated_groupID+" where username="+@userID)
-    #@PowerbiUser.save
     
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/users"
     @request1 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
