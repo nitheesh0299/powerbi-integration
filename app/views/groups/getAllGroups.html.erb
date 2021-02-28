@@ -21,8 +21,8 @@ tr:hover            { background-color: #b3c7dc;}
 <table border="1" style="float: left;  margin-right: 200px">
   <thead>
     <tr>
-      <th>Group_id</th>
-      <th>Group name</th>
+      <th>PowerBI Group ID</th>
+      <th>PowerBI Group name</th>
     </tr>
   </thead>
 
@@ -45,9 +45,9 @@ tr:hover            { background-color: #b3c7dc;}
 <table border="1">
   <thead>  
     <tr>
-        <th>Company name</th>
         <th>PowerBI User name</th>
-        <th>Group Id</th>
+        <th>Versa Company name (Change to Drop Down)</th>
+        <th>PowerBI Group Id</th>
     </tr>
   </thead>
 
@@ -57,11 +57,11 @@ tr:hover            { background-color: #b3c7dc;}
         powerbi_users[0] = "Versa"
     %>
     <tr>
-      <td><%=powerbi_users[0]%></td>
       <td><%=powerbi_users[1]%></td>
+      <td><%=powerbi_users[0]%></td>
       <td> <div class="field">
                 <%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
-                    <%= f.select :id, @array.map { |array| [array['name'], array['id']]} %>
+                    <%= f.select :group_id, @array.map { |array| [array['name'], array['id']]} %>
                     <%= f.submit "Apply"%>
                 <% end %>
             </div> </td>
@@ -74,8 +74,8 @@ tr:hover            { background-color: #b3c7dc;}
 <table border="1" >
   <thead>
     <tr>
-      <th>User name </th>
-      <th>group user access rights</th>
+      <th>PowerBI Login User Name </th>
+      <th>PowerBI User Access Rights</th>
     </tr>
   </thead>
 
@@ -91,8 +91,8 @@ tr:hover            { background-color: #b3c7dc;}
   <% if(@reportArray!=nil)%>
     <thead>
       <tr>
-        <th>report name </th>
-        <th>report id</th>
+        <th>Users' Allowed Reports </th>
+        <th>Report IDs</th>
       </tr>
     </thead>
 

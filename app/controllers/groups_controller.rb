@@ -10,14 +10,23 @@ class GroupsController < ApplicationController
     @url = "https://api.powerbi.com/v1.0/myorg/groups"
     @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @array = @request['value']
-
     
-
     if(params[:id]!=nil)
       @groupID=params[:id]
     else
       @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
     end
+
+    if(params[:group_id]!=nil)
+      @updated_groupID=params[:group_id]    
+    end
+
+    if(params[:user_id]!=nil)
+      @updated_userID=params[:user_id]    
+    end
+
+    #@PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id="+@updated_groupID+" where username="+@userID)
+    #@PowerbiUser.save
     
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/users"
     @request1 = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
@@ -61,5 +70,28 @@ class GroupsController < ApplicationController
     response=HTTParty.post(@url,
         :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
+  end
+
+  def updateUserGroup
+    if(params[:group_id]!=nil)
+      @groupID=params[:group_id]    
+    end
+
+    if(params[:user_id]!=nil)
+      @userID=params[:user_id]    
+    end
+
+    @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id="+@groupID+" where username="+@userID)
+    @PowerbiUser.save
+    # Also add this user to the powerBI group_id
+    # 
+
+    @powerbi_users = ActiveRecord::Base.connection.execute("SELECT parties.company_name, users.username, users.group_id FROM powerbi_users users left join parties ON users.firm_id = parties.firm_id")
+    groupId=params[:groupId]
+    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
+    response=HTTParty.post(@url,
+        :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
+        :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
+
   end
 end
