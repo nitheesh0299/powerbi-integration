@@ -65,10 +65,11 @@ tr:hover            { background-color: #b3c7dc;}
       <td>           
           <%= f.select :company_name, @company_names.map { |company_names| [company_names['company_name'], company_names['company_name']]} %>
       </td>
-      <td><div class="field">
+      <td>
+      <div class="field">
             <%= f.select :group_id, @array.map { |array| [array['name'], array['id']]} %>
             <%= f.submit "Apply"%>
-          </div> 
+      </div> 
       </td>
       </tr>
     <% end %>

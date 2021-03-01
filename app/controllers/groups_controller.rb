@@ -17,11 +17,12 @@ class GroupsController < ApplicationController
       @groupID="84843ee3-b32f-41ce-8663-0301a6562970"
     end
 
-    if(params[:group_id]!=nil && params[:user_id]!=nil)
+    if(params[:group_id]!=nil && params[:user_id]!=nil && params[:company_name]!=nil)
       @updated_groupID=params[:group_id]    
       @updated_userID=params[:user_id]
-
-      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"' where username='"+@updated_userID+"'")
+      @updated_companyname=params[:company_name]
+      # @updated_firmid=ActiveRecord::Base.connection.execute("SELECT firm_id FROM parties WHERE company_name='"+@updated_companyname+"' ")
+      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"' where username='"+@updated_userID+"'")
       # @PowerbiUser.save
     end
     
@@ -51,6 +52,11 @@ class GroupsController < ApplicationController
   end
 
   def createNewGroup
+
+    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
+    response=HTTParty.post(@url,
+        :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
+        :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
   end
   def createNewUser
     @PowerbiUser = PowerbiUser.new(username: params[:username], group_id: params[:groupId], firm_id: params[:companyId], email: params[:email], role: params[:accessrights] )
