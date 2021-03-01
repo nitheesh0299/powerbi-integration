@@ -21,8 +21,8 @@ class GroupsController < ApplicationController
       @updated_groupID=params[:group_id]    
       @updated_userID=params[:user_id]
 
-      #@PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id="+@updated_groupID+" where username="+@userID)
-      #@PowerbiUser.save
+      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"' where username='"+@userID+"'")
+      @PowerbiUser.save
     end
     
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/users"
