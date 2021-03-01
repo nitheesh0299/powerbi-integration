@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
     @url = "https://api.powerbi.com/v1.0/myorg/groups"
     @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @array = @request['value']
-    
+    @company_names = ActiveRecord::Base.connection.execute("SELECT parties.company_name, parties.firm_id FROM parties")    
     if(params[:id]!=nil)
       @groupID=params[:id]
     else
@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
       @updated_groupID=params[:group_id]    
       @updated_userID=params[:user_id]
 
-      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"' where username='"+@userID+"'")
+      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"' where username='"+@updated_userID+"'")
       @PowerbiUser.save
     end
     
