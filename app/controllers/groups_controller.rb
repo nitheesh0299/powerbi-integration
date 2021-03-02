@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
       @updated_companyname=params[:company_name]
       @updated_firmidPG = ActiveRecord::Base.connection.execute("SELECT parties.firm_id FROM parties where company_name='"+@updated_companyname+"'")
       @updated_firmid = @updated_firmidPG.getvalue(0, 0)
-      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"',firm_id='"+@updated_firmid+"' where username='"+@updated_userID+"'")
+      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"',firm_id='"+@updated_firmid.to_s+"' where username='"+@updated_userID+"'")
 
       # @PowerbiUser.save
       # @updated_firmid=ActiveRecord::Base.connection.execute("SELECT firm_id FROM parties WHERE company_name='"+@updated_companyname+"' ")
