@@ -21,20 +21,14 @@ class GroupsController < ApplicationController
       @updated_groupID=params[:group_id]    
       @updated_userID=params[:user_id]
       @updated_companyname=params[:company_name]
-<<<<<<< HEAD
       @updated_firmid = ActiveRecord::Base.connection.execute("SELECT parties.firm_id FROM parties where company_name='"+@updated_companyname+"'")    
-      # @updated_firmid=ActiveRecord::Base.connection.execute("SELECT firm_id FROM parties WHERE company_name='"+@updated_companyname+"' ")
       @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"',firm_id='"+@updated_firmid+"' where username='"+@updated_userID+"'")
-      # @PowerbiUser.save
-=======
 
+      # @PowerbiUser.save
+      # @updated_firmid=ActiveRecord::Base.connection.execute("SELECT firm_id FROM parties WHERE company_name='"+@updated_companyname+"' ")
       #@PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"' where username='"+@updated_userID+"'")
       #@PowerbiUser.save
       # @updated_firmid=ActiveRecord::Base.connection.execute("SELECT firm_id FROM parties WHERE company_name='"+@updated_companyname+"' ")
-
-      @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"' where username='"+@updated_userID+"'")
-      @PowerbiUser.save
->>>>>>> 1493df6df52a2942d6faf0f860268afc14b6b169
     end
     
     @url = "https://api.powerbi.com/v1.0/myorg/groups/#{@groupID}/users"
