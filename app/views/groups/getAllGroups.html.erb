@@ -42,6 +42,7 @@ tr:hover            { background-color: #b3c7dc;}
   </tbody>
 </table>
 
+<%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
 <table border="1" style="width: 550px">
   <thead>  
     <tr>
@@ -51,10 +52,9 @@ tr:hover            { background-color: #b3c7dc;}
     </tr>
   </thead>
 
-  <tbody>
+  <tbody data-no-turbolink="true">
     <% @powerbi_users.values.each do |powerbi_users| %>
  
-    <%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
     <tr>
       <td>
         <a class="field" hidden>
@@ -63,11 +63,11 @@ tr:hover            { background-color: #b3c7dc;}
         <%=powerbi_users[1]%> 
       </td>
       <td>           
-          <%= f.select :company_name, @company_names.map { |company_names| [company_names['company_name'], company_names['company_name']]} %>
+          <%= f.select :company_name, @company_names.map { |company_names| [company_names['company_name'], company_names['company_name']]}, :selected => powerbi_users[0] %>
       </td>
       <td>
       <div class="field">
-            <%= f.select :group_id, @array.map { |array| [array['name'], array['id']]} %>
+            <%= f.select :group_id, @array.map { |array| [array['name'], array['id']]}, :selected => powerbi_users[2] %>
             <%= f.submit "Apply"%>
       </div> 
       </td>
