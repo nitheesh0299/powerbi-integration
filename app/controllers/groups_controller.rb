@@ -21,9 +21,13 @@ class GroupsController < ApplicationController
       @updated_groupID=params[:group_id]    
       @updated_userID=params[:user_id]
       @updated_companyname=params[:company_name]
-      @updated_firmidPG = ActiveRecord::Base.connection.execute("SELECT parties.firm_id, parties.group_id FROM parties where company_name='"+@updated_companyname+"'")
+
+      @updated_firmidPG = ActiveRecord::Base.connection.execute("SELECT parties.firm_id  FROM parties where parties.company_name='"+@updated_companyname+"'")
       @updated_firmid = @updated_firmidPG.getvalue(0, 0)
-      @old_groupid = @updated_firmidPG.getvalue(0, 1)
+      
+      @old_groupidPG = ActiveRecord::Base.connection.execute("SELECT group_id  FROM powerbi_users where username='"+@updated_userID+"'")
+      @old_groupid = @updated_firmidPG.getvalue(0, 0)
+      
       @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"',firm_id='"+@updated_firmid.to_s+"' where username='"+@updated_userID+"'")
 
       # DELETE https://api.powerbi.com/v1.0/myorg/groups/@old_groupid/users/@updated_userID
