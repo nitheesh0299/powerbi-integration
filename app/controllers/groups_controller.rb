@@ -38,14 +38,17 @@ class GroupsController < ApplicationController
       @updated_companyname=params[:company_name]
 
       #
-      @old_data = ActiveRecord::Base.connection.execute("SELECT group_id, email, role  FROM powerbi_users where username='"+@updated_userID+"'")
-      @old_groupid = @old_data.getvalue(0, 0)
-      @email=@old_data.getvalue(0,1)
-      @role=@old_data.getvalue(0,2)  
+      # @old_data = ActiveRecord::Base.connection.execute("SELECT group_id, email, role  FROM powerbi_users where username='"+@updated_userID+"'")
+      # puts @old_data.values
+      old_data = PowerbiUser.where(username:params[:user_id]).select(:group_id, :email, :role ).take
+      @old_groupid = old_data[0]['group_id']
+      @email=old_data[0]['email']
+      @role= old_data[0]['role'] 
 
       @updated_firmidPG = ActiveRecord::Base.connection.execute("SELECT parties.firm_id  FROM parties where parties.company_name='"+@updated_companyname+"'")
-      @updated_firmid = @updated_firmidPG.getvalue(0, 0)
+      @updated_firmid = @updated_firmidPG[:firm_id]
       
+
       
       @deleteurl= "https://api.powerbi.com/v1.0/myorg/groups/#{@old_groupid}/users/#{@email}"
        response=HTTParty.delete(@deleteurl,:headers => {:Authorization=> "Bearer #{session[:access_token]}"})
