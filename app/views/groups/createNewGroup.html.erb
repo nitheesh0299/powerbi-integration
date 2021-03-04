@@ -1,24 +1,10 @@
 <h1> Create new Group  </h1>
 <div>
-<%= form_with model: @createNewGroup do |form| %>
+<%= form_with local:true,:url => groups_createNewGroup_path do |form| %>
     <div class="field">
-        <%= form.label :Group_id  %>
-        <%= form.text_field :Group_id%>
-    </div>
-    <div class="field">
-        <%= form.label :Group_name  %>
-        <%= form.text_field :Group_name%>
-    </div>
-        <div class="field">
-        <%= form.label :User_id  %>
-        <%= form.text_field :User_id%>
-        </div>
-    <div class="field">
-        <%= form.label :User_name %>
-        <%= form.text_field :User_name%>
-    </div>
-    <div class="actions">
-        <%= form.submit %>
+        <%= form.label :Groupname  %>
+        <%= form.text_field :Groupname%>
+         <%= form.submit "Create"%>
     </div>
 <% end %>
 </div>

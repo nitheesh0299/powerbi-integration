@@ -58,7 +58,7 @@ tr:hover            { background-color: #b3c7dc;}
     <tr>
       <td>
         <a class="field" hidden>
-          <%= text_field_tag :user_id => powerbi_users[1] %>
+          <%= text_field_tag :user_id, powerbi_users[1] %>
         </a>
         <%=powerbi_users[1]%> 
       </td>
@@ -119,6 +119,11 @@ tr:hover            { background-color: #b3c7dc;}
 
 
 <div id="createUser">
-  <%= link_to "Create New PowerBI User",groups_createNewUser_path %>
+  <%= link_to "Add PowerBI user to group",groups_createNewUser_path %>
 </div>
 
+<%= link_to "Create New group",groups_createNewGroup_path %>
+
+<%= @updated_groupID%>
+<%= @email%>
+<%= @role%>

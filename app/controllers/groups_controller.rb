@@ -25,12 +25,7 @@ class GroupsController < ApplicationController
     @reportArray = @request2['value']  
 
     @powerbi_users = ActiveRecord::Base.connection.execute("SELECT parties.company_name, users.username, users.group_id FROM powerbi_users users left join parties ON users.firm_id = parties.firm_id")
-    groupId=params[:groupId]
-    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
-    response=HTTParty.post(@url,
-        :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
-        :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
-
+    
 
     if(params[:group_id]!=nil && params[:user_id]!=nil && params[:company_name]!=nil)
       @updated_groupID=params[:group_id]    
@@ -40,13 +35,14 @@ class GroupsController < ApplicationController
       #
       # @old_data = ActiveRecord::Base.connection.execute("SELECT group_id, email, role  FROM powerbi_users where username='"+@updated_userID+"'")
       # puts @old_data.values
-      old_data = PowerbiUser.where(username:params[:user_id]).select(:group_id, :email, :role ).take
-      @old_groupid = old_data[0]['group_id']
-      @email=old_data[0]['email']
-      @role= old_data[0]['role'] 
+      @old_data = ActiveRecord::Base.connection.execute("SELECT group_id, email, role  FROM powerbi_users where username='"+@updated_userID+"'")
+      @old_groupid = @old_data.getvalue(0, 0)
+      @email=@old_data.getvalue(0,1)
+      @role=@old_data.getvalue(0,2)  
+      
 
       @updated_firmidPG = ActiveRecord::Base.connection.execute("SELECT parties.firm_id  FROM parties where parties.company_name='"+@updated_companyname+"'")
-      @updated_firmid = @updated_firmidPG[:firm_id]
+      @updated_firmid = @updated_firmidPG.getvalue(0, 0)
       
 
       
@@ -54,9 +50,8 @@ class GroupsController < ApplicationController
        response=HTTParty.delete(@deleteurl,:headers => {:Authorization=> "Bearer #{session[:access_token]}"})
 
       @updateurl= "https://api.powerbi.com/v1.0/myorg/groups/#{@updated_groupID}/users"
-      response=HTTParty.post(@updateurl,
-        :body => { :emailAddress=>@email, :groupUserAccessRight=> @role},
-        :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
+      response=HTTParty.post(@updateurl,:body => { :emailAddress=>@email, :groupUserAccessRight=> @role},
+      :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
 
       @PowerbiUser = ActiveRecord::Base.connection.execute("UPDATE powerbi_users set group_id='"+@updated_groupID+"',company_name='"+@updated_companyname+"',firm_id='"+@updated_firmid.to_s+"' where username='"+@updated_userID+"'")
 
@@ -78,27 +73,31 @@ class GroupsController < ApplicationController
   end
 
   def createNewGroup
-
-    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
+    @url= "https://api.powerbi.com/v1.0/myorg/groups"
     response=HTTParty.post(@url,
-        :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
+        :body => { :name => params[:Groupname] },
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
   end
   def createNewUser
     @PowerbiUser = PowerbiUser.new(username: params[:username], group_id: params[:groupId], firm_id: params[:companyId], email: params[:email], role: params[:accessrights] )
     @PowerbiUser.save
-    @company_name = ActiveRecord::Base.connection.execute("SELECT parties.company_name, parties.firm_id FROM parties")
-    @accessRightsArray=["Admin","Contributor","Member","Viewer"]
-    @principalTypeArray=["App","Group","User"]
     @url = "https://api.powerbi.com/v1.0/myorg/groups"
     @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @array = @request['value']
 
     groupId=params[:groupId]
+
+    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
+    response=HTTParty.post(@url,
+        :body => { :emailAddress => params[:email],:groupUserAccessRight=>params[:accessrights] },
+        :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
+
+
+    
     
   end
 
-  def updateUserGroup
+  def updateUserGroup    
     if(params[:group_id]!=nil)
       @groupID=params[:group_id]    
     end
