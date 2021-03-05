@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_121805) do
+ActiveRecord::Schema.define(version: 2021_03_05_053451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "parties", id: false, force: :cascade do |t|
+  create_table "parties", id: :serial, force: :cascade do |t|
     t.integer "firm_id"
-    t.string "company_name", limit: 255
+    t.string "company_name", limit: 125
   end
 
   create_table "powerbi_users", force: :cascade do |t|
@@ -54,6 +54,9 @@ ActiveRecord::Schema.define(version: 2021_02_23_121805) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "companyId"
     t.string "role"
+    t.string "powerBI_enabled"
+    t.string "powerBI_user"
+    t.string "powerBI_password"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

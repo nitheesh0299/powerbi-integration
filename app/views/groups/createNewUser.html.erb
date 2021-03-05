@@ -10,6 +10,7 @@
           <%= form.text_field :email%>
       </div>
 
+
       <div class="field">
           <%= form.label :accessrights %>
           <%= select_tag(:accessrights,options_for_select([['None', 'None'],['Admin', 'Admin'], ['Viewer', 'Viewer'],['Contributor', 'Contributor'],['Member', 'Member']])) %>

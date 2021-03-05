@@ -79,15 +79,15 @@ class GroupsController < ApplicationController
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
   end
   def createNewUser
-    @PowerbiUser = PowerbiUser.new(username: params[:username], group_id: params[:groupId], firm_id: params[:companyId], email: params[:email], role: params[:accessrights] )
-    @PowerbiUser.save
+    # @PowerbiUser = PowerbiUser.new(username: params[:username], group_id: params[:groupId], firm_id: params[:companyId], email: params[:email], role: params[:accessrights] )
+    # @PowerbiUser.save
     @url = "https://api.powerbi.com/v1.0/myorg/groups"
     @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
     @array = @request['value']
 
     groupId=params[:groupId]
 
-    @url= "https://api.powerbi.com/v1.0/myorg/groups/#{groupId}/users"
+    @url= "https://api.powerbi.com/v1.0/myorg/admin/groups/#{groupId}/users"
     response=HTTParty.post(@url,
         :body => { :emailAddress => params[:email],:groupUserAccessRight=>params[:accessrights] },
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
