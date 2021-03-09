@@ -1,2 +1,41 @@
 <h1> Versa PowerBI </h1>
 
+<table border="1" style="width: 550px">
+    <thead>  
+        <tr>
+            <th>select</th>
+            <th>email</th>
+            <th>companyid</th>
+            <th>role</th>
+            <th>powerbi_enabled</th>
+            <th>powerbi_user</th>
+            <th>powerbi_password</th>
+        </tr>
+    </thead>
+    <tbody data-no-turbolink="true">
+        <% @users_data.values.each do |users_data| %>
+        <tr>
+            <td>
+                <%=users_data[0]%> 
+            </td>
+            <td>
+                <%=users_data[1]%> 
+            </td>
+            <td>
+                <%=users_data[2]%> 
+            </td>
+            <td>
+                <%=users_data[3]%> 
+            </td>
+            <td>
+                <%=users_data[4]%> 
+            </td>
+            <td>
+                <%=users_data[5]%> 
+            </td>
+        </tr>
+                <%end%>
+
+    </tbody>
+</table>
+
