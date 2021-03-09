@@ -89,7 +89,7 @@ class GroupsController < ApplicationController
 
     @url= "https://api.powerbi.com/v1.0/myorg/admin/groups/#{groupId}/users"
     response=HTTParty.post(@url,
-        :body => { :emailAddress => params[:email],:groupUserAccessRight=>params[:accessrights] },
+        :body => { :UserEmailAddress => params[:email],:groupUserAccessRight=>params[:accessrights] },
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
   end
 
