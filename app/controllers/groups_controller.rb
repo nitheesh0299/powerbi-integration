@@ -91,10 +91,6 @@ class GroupsController < ApplicationController
     response=HTTParty.post(@url,
         :body => { :emailAddress => params[:email],:groupUserAccessRight=>params[:accessrights] },
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
-
-
-    
-    
   end
 
   def updateUserGroup    
@@ -117,6 +113,7 @@ class GroupsController < ApplicationController
     response=HTTParty.post(@url,
         :body => { :displayName=>params[:username], :emailAddress=>params[:email], :groupUserAccessRight=> params[:accessrights],:principalType=> params[:principalType]},
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
-
+  end
+  def versa_power_bi
   end
 end

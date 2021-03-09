@@ -52,11 +52,11 @@ ActiveRecord::Schema.define(version: 2021_03_05_053451) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "companyId"
+    t.integer "companyid"
     t.string "role"
-    t.string "powerBI_enabled"
-    t.string "powerBI_user"
-    t.string "powerBI_password"
+    t.string "powerbi_enabled"
+    t.string "powerbi_user"
+    t.string "powerbi_password"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

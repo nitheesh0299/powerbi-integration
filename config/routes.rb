@@ -26,6 +26,5 @@ Rails.application.routes.draw do
   get 'groups', to: 'groups#index'
   get 'groups/createNewUser', to:'groups#createNewUser'
   post 'groups/createNewUser', to:'groups#createNewUser'
-  
-
+  get 'groups/versa_power_bi', to:'groups#versa_power_bi'
 end
