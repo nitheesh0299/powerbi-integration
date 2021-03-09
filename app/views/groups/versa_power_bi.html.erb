@@ -1,41 +1,236 @@
-<h1> Versa PowerBI </h1>
-
-<table border="1" style="width: 550px">
-    <thead>  
-        <tr>
-            <th>select</th>
-            <th>email</th>
-            <th>companyid</th>
-            <th>role</th>
-            <th>powerbi_enabled</th>
-            <th>powerbi_user</th>
-            <th>powerbi_password</th>
-        </tr>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+</head>
+<body>
+  <div id="dialog-form" title="Create new user">
+  <p class="validateTips">All form fields are required.</p>
+  <form>
+    <fieldset>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+<!--Edit user modal-->
+<div id="edit-dialog-form" title="Edit user details">
+  <p class="validateTips">All form fields are required.</p>
+  <form>
+    <fieldset>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="edit_name" value="" class="text ui-widget-content ui-corner-all">
+      <label for="email">Email</label>
+      <input type="text" name="email" id="edit_email" value="" class="text ui-widget-content ui-corner-all">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="edit_password" value="" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" value="Edit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+<div id="users-contain" class="ui-widget">
+  <h1>Existing Users:</h1>
+  <table id="users" class="ui-widget ui-widget-content">
+    <thead>
+      <tr class="ui-widget-header ">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Edit</th>
+      </tr>
     </thead>
-    <tbody data-no-turbolink="true">
-        <% @users_data.values.each do |users_data| %>
-        <tr>
-            <td>
-                <%=users_data[0]%> 
-            </td>
-            <td>
-                <%=users_data[1]%> 
-            </td>
-            <td>
-                <%=users_data[2]%> 
-            </td>
-            <td>
-                <%=users_data[3]%> 
-            </td>
-            <td>
-                <%=users_data[4]%> 
-            </td>
-            <td>
-                <%=users_data[5]%> 
-            </td>
-        </tr>
-                <%end%>
-
+    <tbody>
+      <tr>
+        <td>Lionel Messi</td>
+        <td>dopin@barza.com</td>
+        <td>elche</td>
+        <td><button class="edit-user">EDIT</button></td>
+      </tr>
+      <tr>
+        <td>Ariel Robben</td>
+        <td>arobben@bm.com</td>
+        <td>swimming</td>
+        <td><button class="edit-user">EDIT</button></td>
+      </tr>
+      <tr>
+        <td>Miroslav Klose</td>
+        <td>german@winner.com</td>
+        <td>thebestshotter</td>
+        <td><button class="edit-user">EDIT</button></td>
+      </tr>
     </tbody>
-</table>
-
+  </table>
+</div>
+<button id="create-user">Create new user</button>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  <script>
+  $(function() {
+    var dialog, form,
+      name = $( "#name" ),
+      email = $( "#email" ),
+      password = $( "#password" ),
+      allFields = $( [] ).add( name ).add( email ).add( password ),
+      tips = $( ".validateTips" );
+    function updateTips( t ) {
+      tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        tips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+    function checkLength( o, n, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Length of " + n + " must be between " +
+          min + " and " + max + "." );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    function checkRegexp( o, regexp, n ) {
+      if ( !( regexp.test( o.val() ) ) ) {
+        o.addClass( "ui-state-error" );
+        updateTips( n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    function addUser() {
+      var valid = true;
+      allFields.removeClass( "ui-state-error" );
+      valid = valid && checkLength( name, "username", 3, 16 );
+      valid = valid && checkLength( email, "email", 6, 80 );
+      valid = valid && checkLength( password, "password", 5, 16 );
+      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
+      //valid = valid && checkRegexp( email,/^[a-z]([0-9a-z_\s])+$/i,  "eg. ui@jquery.com" );
+      valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+      if ( valid ) {
+        $( "#users tbody" ).append( "<tr>" +
+          "<td>" + name.val() + "</td>" +
+          "<td>" + email.val() + "</td>" +
+          "<td>" + password.val() + "</td>" +
+        "</tr>" );
+        dialog.dialog( "close" );
+      }
+      return valid;
+    }
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create an account": addUser,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
+      }
+    });
+      //create user dialog
+      /*dialogs = $( "#dialog-forms" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create an account": addUser,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
+      }
+    });*/
+    form = dialog.find( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+      addUser();
+    });
+    $( "#create-user" ).button().on( "click", function() {
+      dialog.dialog( "open" );
+    });
+    //edit user dailog
+    edit_dialogs = $( "#edit-dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Edit user details": editUser,
+        Cancel: function() {
+          edit_dialogs.dialog( "close" );
+        }
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
+      }
+    });
+    edit_form = edit_dialogs.find( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+      editUser();
+    });
+    var current_edit_row_details={};
+     function editUser() {
+      var valid = true;
+      //console.log('current_edit_row_details = ');
+      //console.log(current_edit_row_details);
+      var tds = $(current_edit_row_details.current_row).children('td');
+      var name = $('#edit_name').val();//current_edit_row_details.name;
+      var email = $('#edit_email').val();//current_edit_row_details.email;
+      var password = $('#edit_password').val(); //current_edit_row_details.password;
+        tds[0].innerHTML = name;
+        tds[1].innerHTML = email;
+        tds[2].innerHTML = password;
+        edit_dialogs.dialog( "close" );
+      //allFields.removeClass( "ui-state-error" );
+      /*valid = valid && checkLength( name, "username", 3, 16 );
+      valid = valid && checkLength( email, "email", 6, 80 );
+      valid = valid && checkLength( password, "password", 5, 16 );
+      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
+      //valid = valid && checkRegexp( email,/^[a-z]([0-9a-z_\s])+$/i,  "eg. ui@jquery.com" );
+      valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+      if ( valid ) {
+        $( "#users tbody" ).append( "<tr>" +
+          "<td>" + name.val() + "</td>" +
+          "<td>" + email.val() + "</td>" +
+          "<td>" + password.val() + "</td>" +
+        "</tr>" );
+      }*/
+      return valid;
+    }
+    $( ".edit-user" ).click(function() {
+       var tds = $(this).closest('tr').children('td');
+       //alert(tds[0].innerHTML)
+       var name = tds[0].innerHTML;
+       var email = tds[1].innerHTML;
+       var password = tds[2].innerHTML;
+       $('#edit_name').val(name);
+       $('#edit_email').val(email);
+       $('#edit_password').val(password);
+       current_edit_row_details.name = name;
+       current_edit_row_details.email = email;
+       current_edit_row_details.password = password;
+       current_edit_row_details.current_row = $(this).closest('tr');
+       edit_dialogs.dialog( "open" );
+       //console.log(tds);
+    });
+  });
+  </script>
+</body>
+</html>
