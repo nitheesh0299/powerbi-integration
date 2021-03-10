@@ -1,40 +1,125 @@
+<head>
+  <style>
+    body {
+      font-size: 62.5%;
+    }
+    label,
+    input {
+      display: block;
+    }
+    input.text {
+      margin-bottom: 12px;
+      width: 95%;
+      padding: 0.4em;
+    }
+    fieldset {
+      padding: 0;
+      border: 0;
+      margin-top: 25px;
+    }
+    h1 {
+      font-size: 1.2em;
+      margin: 0.6em 0;
+    }
+    div#users-contain {
+      width: 350px;
+      margin: 20px 0;
+    }
+    div#users-contain table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    div#users-contain table td,
+    div#users-contain table th {
+      border: 1px solid #eee;
+      padding: 0.6em 10px;
+      text-align: left;
+    }
+    .ui-dialog .ui-state-error {
+      padding: 0.3em;
+    }
+    .validateTips {
+      border: 1px solid transparent;
+      padding: 0.3em;
+    }
+  </style>
 
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"></script>
-<style>
-	body { font-size: 62.5%; }
-    label, input { display:block; }
-    input.text { margin-bottom:12px; width:95%; padding: .4em; }
-    fieldset { padding:0; border:0; margin-top:25px; }
-    h1 { font-size: 1.2em; margin: .6em 0; }
-    div#users-contain { width: 350px; margin: 20px 0; }
-    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-    .ui-dialog .ui-state-error { padding: .3em; }
-    .validateTips { border: 1px solid transparent; padding: 0.3em; }
-</style>
-
-  
+  <link
+    href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"
+  />
+  <link
+    rel="stylesheet"
+    href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+  />
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script> -->
+</head>
 
 <!--Edit user modal-->
 <div id="edit-dialog-form" title="Edit user details">
   <p class="validateTips">All form fields are required.</p>
   <form>
     <fieldset>
-      	<label for="email">Email</label>
-		<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-		<label for="companyid">companyid</label>
-		<input type="text" name="companyid" id="companyid" value="" class="text ui-widget-content ui-corner-all">
-		<label for="role">role</label>
-		<input type="text" name="role" id="role" value="" class="text ui-widget-content ui-corner-all">
-		<label for="powerbi_enabled">powerbi_enabled</label>
-		<input type="text" name="powerbi_enabled" id="powerbi_enabled" value="" class="text ui-widget-content ui-corner-all">
-		<label for="powerbi_user">powerbi_user</label>
-		<input type="text" name="powerbi_user" id="powerbi_user" value="" class="text ui-widget-content ui-corner-all">
-		<label for="powerbi_password">powerbi_password</label>
-		<input type="text" name="powerbi_password" id="powerbi_password" value="" class="text ui-widget-content ui-corner-all">
-				
-		<!-- Allow form submission with keyboard without duplicating the dialog button -->
-		<input type="submit" value="Edit" id="edit" tabindex="-1" style="position:absolute; top:-1000px"> 
+      <label for="email">Email</label>
+      <input
+        type="text"
+        name="email"
+        id="email"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="companyid">companyid</label>
+      <input
+        type="text"
+        name="companyid"
+        id="companyid"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="role">role</label>
+      <input
+        type="text"
+        name="role"
+        id="role"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_enabled">powerbi_enabled</label>
+      <input
+        type="text"
+        name="powerbi_enabled"
+        id="powerbi_enabled"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_user">powerbi_user</label>
+      <input
+        type="text"
+        name="powerbi_user"
+        id="powerbi_user"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_password">powerbi_password</label>
+      <input
+        type="text"
+        name="powerbi_password"
+        id="powerbi_password"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input
+        type="submit"
+        value="Edit"
+        id="edit"
+        tabindex="-1"
+        style="position: absolute; top: -1000px"
+      />
     </fieldset>
   </form>
 </div>
@@ -42,73 +127,75 @@
 <div id="users-contain" class="ui-widget">
   <h1>Existing Users:</h1>
   <table id="users" class="ui-widget ui-widget-content">
-			<thead>
-				<tr>
-					<th>email</th>
-					<th>companyid</th>
-					<th>role</th>
-					<th>powerbi_enabled</th>
-					<th>powerbi_user</th>
-					<th>powerbi_password</th>
-					<th>Edit</th>
-				</tr>
-			</thead>
-			<tbody data-no-turbolink="true">
-				<% @users_data.values.each do |users_data| %>
-					<tr>
-						<td><%=users_data[1]%></td>
-						<td><%=users_data[5]%></td>
-						<td><%=users_data[6]%></td>
-						<td><%=users_data[7]%></td>
-						<td><%=users_data[8]%></td>
-						<td><%=users_data[9]%></td>
-						<td><button class="edit-user">EDIT</button></td>
-
-					</tr>
-					<%end%>
-		</table>
+    <thead>
+      <tr>
+        <th>email</th>
+        <th>companyid</th>
+        <th>role</th>
+        <th>powerbi_enabled</th>
+        <th>powerbi_user</th>
+        <th>powerbi_password</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody data-no-turbolink="true">
+      <% @users_data.values.each do |users_data| %>
+      <tr>
+        <td><%=users_data[1]%></td>
+        <td><%=users_data[5]%></td>
+        <td><%=users_data[6]%></td>
+        <td><%=users_data[7]%></td>
+        <td><%=users_data[8]%></td>
+        <td><%=users_data[9]%></td>
+        <td><button class="edit-user">EDIT</button></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
 </div>
 
 <button id="create-user">Create new user</button>
 
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-
 <script type="text/javascript">
-  $(function() {
-    var dialog, form,
-      	email = $("#email"),
-    	companyid=$("companyid"),
-        role=$("role"),
-        powerbi_enabled=$("powerbi_enabled"),
-    	powerbi_user=$("powerbi_user"),
-        powerbi_password=$("powerbi_password"),
-      	allFields = $( [] ).add( email ).add(companyid).add(role).add(powerbi_enabled).add(powerbi_user).add( poqwerbi_password ),
-      tips = $( ".validateTips" );
+  $(function () {
+    var dialog,
+      form,
+      email = $("#email"),
+      companyid = $("companyid"),
+      role = $("role"),
+      powerbi_enabled = $("powerbi_enabled"),
+      powerbi_user = $("powerbi_user"),
+      powerbi_password = $("powerbi_password"),
+      allFields = $([])
+        .add(email)
+        .add(companyid)
+        .add(role)
+        .add(powerbi_enabled)
+        .add(powerbi_user)
+        .add(powerbi_password),
+      tips = $(".validateTips");
 
-
-    function updateTips( t ) {
-      tips
-        .text( t )
-        .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
+    function updateTips(t) {
+      tips.text(t).addClass("ui-state-highlight");
+      setTimeout(function () {
+        tips.removeClass("ui-state-highlight", 1500);
+      }, 500);
     }
-    function checkLength( o, n, min, max ) {
-      if ( o.val().length > max || o.val().length < min ) {
-        o.addClass( "ui-state-error" );
-        updateTips( "Length of " + n + " must be between " +
-          min + " and " + max + "." );
+    function checkLength(o, n, min, max) {
+      if (o.val().length > max || o.val().length < min) {
+        o.addClass("ui-state-error");
+        updateTips(
+          "Length of " + n + " must be between " + min + " and " + max + "."
+        );
         return false;
       } else {
         return true;
       }
     }
-    function checkRegexp( o, regexp, n ) {
-      if ( !( regexp.test( o.val() ) ) ) {
-        o.addClass( "ui-state-error" );
-        updateTips( n );
+    function checkRegexp(o, regexp, n) {
+      if (!regexp.test(o.val())) {
+        o.addClass("ui-state-error");
+        updateTips(n);
         return false;
       } else {
         return true;
@@ -116,76 +203,88 @@
     }
     function addUser() {
       var valid = true;
-      if ( valid ) {
-        $( "#users tbody" ).append( "<tr>" +
-          "<td>" + name.val() + "</td>" +
-          "<td>" + email.val() + "</td>" +
-          "<td>" + password.val() + "</td>" +
-        "</tr>" );
-        dialog.dialog( "close" );
+      if (valid) {
+        $("#users tbody").append(
+          "<tr>" +
+            "<td>" +
+            name.val() +
+            "</td>" +
+            "<td>" +
+            email.val() +
+            "</td>" +
+            "<td>" +
+            password.val() +
+            "</td>" +
+            "</tr>"
+        );
+        dialog.dialog("close");
       }
       return valid;
     }
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Create an account": addUser,
-        Cancel: function() {
-          dialog.dialog( "close" );
-        }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
-      }
+    $(function () {
+      dialog = $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Create an account": addUser,
+          Cancel: function () {
+            dialog.dialog("close");
+          },
+        },
+        close: function () {
+          form[0].reset();
+          allFields.removeClass("ui-state-error");
+        },
+      });
+
+      form = dialog.find("form").on("submit", function (event) {
+        event.preventDefault();
+        addUser();
+      });
     });
-
-    form = dialog.find( "form" ).on( "submit", function( event ) {
-      event.preventDefault();
-      addUser();
-    });
-
-
-    $( "#create-user" ).button().on( "click", function() {
-      dialog.dialog( "open" );
+    $(function () {
+      $("#create-user")
+        .button()
+        .on("click", function () {
+          dialog.dialog("open");
+        });
     });
     //edit user dailog
-
-
-    edit_dialogs = $( "#edit-dialog-form" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Edit user details": editUser,
-        Cancel: function() {
-          edit_dialogs.dialog( "close" );
-        }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
-      }
+    $(function () {
+      edit_dialogs = $("#edit-dialog-form").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Edit user details": editUser,
+          Cancel: function () {
+            edit_dialogs.dialog("close");
+          },
+        },
+        close: function () {
+          document.form[0].reset();
+          allFields.removeClass("ui-state-error");
+        },
+      });
+      edit_form = edit_dialogs.find("form").on("submit", function (event) {
+        event.preventDefault();
+        editUser();
+      });
     });
-    edit_form = edit_dialogs.find( "form" ).on( "submit", function( event ) {
-      event.preventDefault();
-      editUser();
-    });
-    var current_edit_row_details={};
-     function editUser() {
+    var current_edit_row_details = {};
+    function editUser() {
       var valid = true;
-      var tds = $(current_edit_row_details.current_row).children('td');
-      var name = $('#edit_name').val();//current_edit_row_details.name;
-      var email = $('#edit_email').val();//current_edit_row_details.email;
-      var password = $('#edit_password').val(); //current_edit_row_details.password;
-        tds[0].innerHTML = name;
-        tds[1].innerHTML = email;
-        tds[2].innerHTML = password;
-        edit_dialogs.dialog( "close" );
+      var tds = $(current_edit_row_details.current_row).children("td");
+      var name = $("#edit_name").val(); //current_edit_row_details.name;
+      var email = $("#edit_email").val(); //current_edit_row_details.email;
+      var password = $("#edit_password").val(); //current_edit_row_details.password;
+      tds[0].innerHTML = name;
+      tds[1].innerHTML = email;
+      tds[2].innerHTML = password;
+      edit_dialogs.dialog("close");
       //allFields.removeClass( "ui-state-error" );
       /*valid = valid && checkLength( name, "username", 3, 16 );
       valid = valid && checkLength( email, "email", 6, 80 );
@@ -202,22 +301,21 @@
       }*/
       return valid;
     }
-    $( ".edit-user" ).click(function() {
-       var tds = $(this).closest('tr').children('td');
-       //alert(tds[0].innerHTML)
-       var name = tds[0].innerHTML;
-       var email = tds[1].innerHTML;
-       var password = tds[2].innerHTML;
-       $('#edit_name').val(name);
-       $('#edit_email').val(email);
-       $('#edit_password').val(password);
-       current_edit_row_details.name = name;
-       current_edit_row_details.email = email;
-       current_edit_row_details.password = password;
-       current_edit_row_details.current_row = $(this).closest('tr');
-       edit_dialogs.dialog( "open" );
-       //console.log(tds);
+    $(".edit-user").click(function () {
+      var tds = $(this).closest("tr").children("td");
+      //alert(tds[0].innerHTML)
+      var name = tds[0].innerHTML;
+      var email = tds[1].innerHTML;
+      var password = tds[2].innerHTML;
+      $("#edit_name").val(name);
+      $("#edit_email").val(email);
+      $("#edit_password").val(password);
+      current_edit_row_details.name = name;
+      current_edit_row_details.email = email;
+      current_edit_row_details.password = password;
+      current_edit_row_details.current_row = $(this).closest("tr");
+      edit_dialogs.dialog("open");
+      //console.log(tds);
     });
   });
-  </script>
-
+</script>
