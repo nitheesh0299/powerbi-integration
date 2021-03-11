@@ -68,7 +68,7 @@
       <input
         type="text"
         name="email"
-        id="email"
+        id="edit-email"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -76,7 +76,7 @@
       <input
         type="text"
         name="companyid"
-        id="companyid"
+        id="edit-companyid"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -84,7 +84,7 @@
       <input
         type="text"
         name="role"
-        id="role"
+        id="edit-role"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -92,7 +92,7 @@
       <input
         type="text"
         name="powerbi_enabled"
-        id="powerbi_enabled"
+        id="edit-powerbi_enabled"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -100,7 +100,7 @@
       <input
         type="text"
         name="powerbi_user"
-        id="powerbi_user"
+        id="edit-powerbi_user"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -108,7 +108,7 @@
       <input
         type="text"
         name="powerbi_password"
-        id="powerbi_password"
+        id="edit-powerbi_password"
         value=""
         class="text ui-widget-content ui-corner-all"
       />
@@ -325,6 +325,7 @@
         dialog.dialog("open");
       });
     });
+
     //edit user dailog
     $(function () {
       edit_dialogs = $("#edit-dialog-form").dialog({
@@ -348,16 +349,26 @@
         editUser();
       });
     });
+
     var current_edit_row_details = {};
     function editUser() {
       var valid = true;
-      var tds = $(current_edit_row_details.current_row).children("td");
-      var name = $("#edit_name").val(); //current_edit_row_details.name;
-      var email = $("#edit_email").val(); //current_edit_row_details.email;
-      var password = $("#edit_password").val(); //current_edit_row_details.password;
-      tds[0].innerHTML = name;
-      tds[1].innerHTML = email;
-      tds[2].innerHTML = password;
+      var tds = $(".edit-user").parent().parent().children("td");
+      // var name = $("#edit_name").val(); //current_edit_row_details.name;
+      // var email = $("#edit_email").val(); //current_edit_row_details.email;
+      // var password = $("#edit_password").val(); //current_edit_row_details.password;
+      var email = $("#edit-email").val(),
+        companyid = $("#edit-companyid").val(),
+        role = $("#edit-role").val(),
+        powerbi_enabled = $("#edit-powerbi_enabled").val(),
+        powerbi_user = $("#edit-powerbi_user").val(),
+        powerbi_password = $("#edit-powerbi_password").val();
+      tds[0].innerHTML = email;
+      tds[1].innerHTML = companyid;
+      tds[2].innerHTML = role;
+      tds[3].innerHTML = powerbi_enabled;
+      tds[4].innerHTML = powerbi_user;
+      tds[5].innerHTML = powerbi_password;
       edit_dialogs.dialog("close");
       //allFields.removeClass( "ui-state-error" );
       /*valid = valid && checkLength( name, "username", 3, 16 );
@@ -376,18 +387,15 @@
       return valid;
     }
     $(document).on("click", ".edit-user", function () {
-      var tds = $(this).closest("tr").children("td");
+      var tds = $(".edit-user").parent().parent().children("td");
       //alert(tds[0].innerHTML)
-      var name = tds[0].innerHTML;
-      var email = tds[1].innerHTML;
-      var password = tds[2].innerHTML;
-      $("#edit_name").val(name);
-      $("#edit_email").val(email);
-      $("#edit_password").val(password);
-      current_edit_row_details.name = name;
-      current_edit_row_details.email = email;
-      current_edit_row_details.password = password;
-      current_edit_row_details.current_row = $(this).closest("tr");
+
+      $("#edit-email").value = tds[0].innerHTML;
+      $("#edit-companyid").value = tds[1].innerHTML;
+      $("#edit-role").value = tds[2].innerHTML;
+      $("#edit-powerbi_enabled").value = tds[3].innerHTML;
+      $("#edit-powerbi_user").value = tds[4].innerHTML;
+      $("#edit-powerbi_password").value = tds[5].innerHTML;
       edit_dialogs.dialog("open");
       //console.log(tds);
     });
