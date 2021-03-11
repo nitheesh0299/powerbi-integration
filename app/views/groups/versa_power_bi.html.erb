@@ -46,6 +46,7 @@
   </style>
 
   <link
+    rel="stylesheet"
     href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"
   />
   <link
@@ -61,7 +62,73 @@
 <!--Edit user modal-->
 <div id="edit-dialog-form" title="Edit user details">
   <p class="validateTips">All form fields are required.</p>
-  <form>
+  <form id="form1" name="form1">
+    <fieldset>
+      <label for="email">Email</label>
+      <input
+        type="text"
+        name="email"
+        id="email"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="companyid">companyid</label>
+      <input
+        type="text"
+        name="companyid"
+        id="companyid"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="role">role</label>
+      <input
+        type="text"
+        name="role"
+        id="role"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_enabled">powerbi_enabled</label>
+      <input
+        type="text"
+        name="powerbi_enabled"
+        id="powerbi_enabled"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_user">powerbi_user</label>
+      <input
+        type="text"
+        name="powerbi_user"
+        id="powerbi_user"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+      <label for="powerbi_password">powerbi_password</label>
+      <input
+        type="text"
+        name="powerbi_password"
+        id="powerbi_password"
+        value=""
+        class="text ui-widget-content ui-corner-all"
+      />
+
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input
+        type="submit"
+        value="Edit"
+        id="edit"
+        tabindex="-1"
+        style="position: absolute; top: -1000px"
+      />
+    </fieldset>
+  </form>
+</div>
+
+<!--Create user modal-->
+<div id="dialog-form" title="Create new User">
+  <p class="validateTips">All form fields are required.</p>
+  <form id="form2" name="form2">
     <fieldset>
       <label for="email">Email</label>
       <input
@@ -160,12 +227,12 @@
   $(function () {
     var dialog,
       form,
-      email = $("#email"),
-      companyid = $("companyid"),
-      role = $("role"),
-      powerbi_enabled = $("powerbi_enabled"),
-      powerbi_user = $("powerbi_user"),
-      powerbi_password = $("powerbi_password"),
+      email = $("#email").val(),
+      companyid = $("#companyid").val(),
+      role = $("#role").val(),
+      powerbi_enabled = $("#powerbi_enabled").val(),
+      powerbi_user = $("#powerbi_user").val(),
+      powerbi_password = $("#powerbi_password").val(),
       allFields = $([])
         .add(email)
         .add(companyid)
@@ -207,14 +274,24 @@
         $("#users tbody").append(
           "<tr>" +
             "<td>" +
-            name.val() +
+            $("#email").val() +
             "</td>" +
             "<td>" +
-            email.val() +
+            $("#companyid").val() +
             "</td>" +
             "<td>" +
-            password.val() +
+            $("#role").val() +
             "</td>" +
+            "<td>" +
+            $("#powerbi_enabled").val() +
+            "</td>" +
+            "<td>" +
+            $("#powerbi_user").val() +
+            "</td>" +
+            "<td>" +
+            $("#powerbi_password").val() +
+            "</td>" +
+            '<td> <button class="edit-user">EDIT</button></td>' +
             "</tr>"
         );
         dialog.dialog("close");
@@ -234,7 +311,7 @@
           },
         },
         close: function () {
-          form[0].reset();
+          document.form2.reset();
           allFields.removeClass("ui-state-error");
         },
       });
@@ -243,13 +320,10 @@
         event.preventDefault();
         addUser();
       });
-    });
-    $(function () {
-      $("#create-user")
-        .button()
-        .on("click", function () {
-          dialog.dialog("open");
-        });
+
+      $("#create-user").on("click", function () {
+        dialog.dialog("open");
+      });
     });
     //edit user dailog
     $(function () {
@@ -265,7 +339,7 @@
           },
         },
         close: function () {
-          document.form[0].reset();
+          document.form1.reset();
           allFields.removeClass("ui-state-error");
         },
       });
@@ -301,7 +375,7 @@
       }*/
       return valid;
     }
-    $(".edit-user").click(function () {
+    $(document).on("click", ".edit-user", function () {
       var tds = $(this).closest("tr").children("td");
       //alert(tds[0].innerHTML)
       var name = tds[0].innerHTML;
