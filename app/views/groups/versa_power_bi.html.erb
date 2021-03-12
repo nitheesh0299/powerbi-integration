@@ -387,15 +387,14 @@
       return valid;
     }
     $(document).on("click", ".edit-user", function () {
-      var tds = $(".edit-user").parent().parent().children("td");
+      var tds = $(this).closest("tr").children("td");
       //alert(tds[0].innerHTML)
-
-      $("#edit-email").value = tds[0].innerHTML;
-      $("#edit-companyid").value = tds[1].innerHTML;
-      $("#edit-role").value = tds[2].innerHTML;
-      $("#edit-powerbi_enabled").value = tds[3].innerHTML;
-      $("#edit-powerbi_user").value = tds[4].innerHTML;
-      $("#edit-powerbi_password").value = tds[5].innerHTML;
+      $("#edit-email").val(tds[0].innerHTML);
+      $("#edit-companyid").val(tds[1].innerHTML);
+      $("#edit-role").val(tds[2].innerHTML);
+      $("#edit-powerbi_enabled").val(tds[3].innerHTML);
+      $("#edit-powerbi_user").val(tds[4].innerHTML);
+      $("#edit-powerbi_password").val(tds[5].innerHTML);
       edit_dialogs.dialog("open");
       //console.log(tds);
     });
