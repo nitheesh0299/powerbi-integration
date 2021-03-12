@@ -353,7 +353,7 @@
     var current_edit_row_details = {};
     function editUser() {
       var valid = true;
-      var tds = $(".edit-user").parent().parent().children("td");
+      var tds = $(current_edit_row_details.current_row).children("td");
       // var name = $("#edit_name").val(); //current_edit_row_details.name;
       // var email = $("#edit_email").val(); //current_edit_row_details.email;
       // var password = $("#edit_password").val(); //current_edit_row_details.password;
@@ -395,6 +395,13 @@
       $("#edit-powerbi_enabled").val(tds[3].innerHTML);
       $("#edit-powerbi_user").val(tds[4].innerHTML);
       $("#edit-powerbi_password").val(tds[5].innerHTML);
+      current_edit_row_details.email = email;
+      current_edit_row_details.companyid = companyid;
+      current_edit_row_details.role = role;
+      current_edit_row_details.powerbi_enabled = powerbi_enabled;
+      current_edit_row_details.powerbi_user = powerbi_user;
+      current_edit_row_details.powerbi_password = powerbi_password;
+      current_edit_row_details.current_row = $(this).closest("tr");
       edit_dialogs.dialog("open");
       //console.log(tds);
     });
