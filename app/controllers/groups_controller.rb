@@ -124,8 +124,7 @@ class GroupsController < ApplicationController
     @powerbi_user=params[:powerbi_user]
     @powerbi_password=params[:powerbi_password]
     if(params[:email] != nil && @powerbi_enabled != nil && @powerbi_password!=nil )
-      @test=params[:email]
-      @test="bfvvk"
+      
      ActiveRecord::Base.connection.execute("UPDATE users set powerbi_enabled='"+@powerbi_enabled+"',powerbi_user='"+@powerbi_user+"',powerbi_password='"+@powerbi_password+"' where email='"+@email+"'")
     end
 
