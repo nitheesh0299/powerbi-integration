@@ -53,7 +53,8 @@
     rel="stylesheet"
     href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
   />
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <%# <script src="https://code.jquery.com/jquery-1.12.4.js"></script> %>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
   <!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script> -->
@@ -61,8 +62,11 @@
 
 <!--Edit user modal-->
 <div id="edit-dialog-form" title="Edit user details">
+
   <p class="validateTips">All form fields are required.</p>
-  <form id="form1" name="form1">
+  <form id="form1" name="form1" action="/groups/versa_power_bi" method="post" accept-charset="UTF-8">
+      <input name="authenticity_token" type="hidden" value="..." />
+
     <fieldset>
       <label for="email">Email</label>
       <input
@@ -71,6 +75,7 @@
         id="edit-email"
         value=""
         class="text ui-widget-content ui-corner-all"
+        readonly
       />
       <label for="companyid">companyid</label>
       <input
@@ -79,6 +84,7 @@
         id="edit-companyid"
         value=""
         class="text ui-widget-content ui-corner-all"
+        readonly
       />
       <label for="role">role</label>
       <input
@@ -87,6 +93,7 @@
         id="edit-role"
         value=""
         class="text ui-widget-content ui-corner-all"
+        readonly
       />
       <label for="powerbi_enabled">powerbi_enabled</label>
       <input
@@ -114,14 +121,12 @@
       />
 
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input
-        type="submit"
-        value="Edit"
-        id="edit"
-        tabindex="-1"
-        style="position: absolute; top: -1000px"
-      />
-    </fieldset>
+      <input 
+        type="submit" 
+        name="commit" 
+        value="Submit" 
+       />   
+ </fieldset>
   </form>
 </div>
 
@@ -193,6 +198,8 @@
 
 <div id="users-contain" class="ui-widget">
   <h1>Existing Users:</h1>
+  <p><%= @test %><p>
+
   <table id="users" class="ui-widget ui-widget-content">
     <thead>
       <tr>
@@ -344,19 +351,15 @@
           allFields.removeClass("ui-state-error");
         },
       });
-      edit_form = edit_dialogs.find("form").on("submit", function (event) {
-        event.preventDefault();
-        editUser();
-      });
+
+
+      
     });
 
     var current_edit_row_details = {};
     function editUser() {
       var valid = true;
       var tds = $(current_edit_row_details.current_row).children("td");
-      // var name = $("#edit_name").val(); //current_edit_row_details.name;
-      // var email = $("#edit_email").val(); //current_edit_row_details.email;
-      // var password = $("#edit_password").val(); //current_edit_row_details.password;
       var email = $("#edit-email").val(),
         companyid = $("#edit-companyid").val(),
         role = $("#edit-role").val(),
@@ -370,20 +373,6 @@
       tds[4].innerHTML = powerbi_user;
       tds[5].innerHTML = powerbi_password;
       edit_dialogs.dialog("close");
-      //allFields.removeClass( "ui-state-error" );
-      /*valid = valid && checkLength( name, "username", 3, 16 );
-      valid = valid && checkLength( email, "email", 6, 80 );
-      valid = valid && checkLength( password, "password", 5, 16 );
-      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
-      //valid = valid && checkRegexp( email,/^[a-z]([0-9a-z_\s])+$/i,  "eg. ui@jquery.com" );
-      valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-      if ( valid ) {
-        $( "#users tbody" ).append( "<tr>" +
-          "<td>" + name.val() + "</td>" +
-          "<td>" + email.val() + "</td>" +
-          "<td>" + password.val() + "</td>" +
-        "</tr>" );
-      }*/
       return valid;
     }
     $(document).on("click", ".edit-user", function () {
@@ -403,6 +392,7 @@
       current_edit_row_details.powerbi_password = powerbi_password;
       current_edit_row_details.current_row = $(this).closest("tr");
       edit_dialogs.dialog("open");
+      
       //console.log(tds);
     });
   });
