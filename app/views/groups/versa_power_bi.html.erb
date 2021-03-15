@@ -96,13 +96,20 @@
         readonly
       />
       <label for="powerbi_enabled">powerbi_enabled</label>
-      <input
+      <select name="powerbi_enabled"
+        id="edit-powerbi_enabled"
+        value=""
+        class="text ui-widget-content ui-corner-all">
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+      <%# <input
         type="text"
         name="powerbi_enabled"
         id="edit-powerbi_enabled"
         value=""
         class="text ui-widget-content ui-corner-all"
-      />
+      /> %>
       <label for="powerbi_user">powerbi_user</label>
       <input
         type="text"
@@ -341,7 +348,6 @@
         width: 350,
         modal: true,
         buttons: {
-          "Edit user details": editUser,
           Cancel: function () {
             edit_dialogs.dialog("close");
           },
