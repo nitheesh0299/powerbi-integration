@@ -53,7 +53,9 @@
     rel="stylesheet"
     href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
   />
-  <%# <script src="https://code.jquery.com/jquery-1.12.4.js"></script> %>
+  <%#
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  %>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
@@ -62,10 +64,15 @@
 
 <!--Edit user modal-->
 <div id="edit-dialog-form" title="Edit user details">
-
   <p class="validateTips">All form fields are required.</p>
-  <form id="form1" name="form1" action="/groups/versa_power_bi" method="post" accept-charset="UTF-8">
-      <input name="authenticity_token" type="hidden" value="..." />
+  <form
+    id="form1"
+    name="form1"
+    action="/groups/versa_power_bi"
+    method="post"
+    accept-charset="UTF-8"
+  >
+    <input name="authenticity_token" type="hidden" value="..." />
 
     <fieldset>
       <label for="email">Email</label>
@@ -96,20 +103,24 @@
         readonly
       />
       <label for="powerbi_enabled">powerbi_enabled</label>
-      <select name="powerbi_enabled"
+      <select
+        name="powerbi_enabled"
         id="edit-powerbi_enabled"
         value=""
-        class="text ui-widget-content ui-corner-all">
+        class="text ui-widget-content ui-corner-all"
+      >
         <option value="true">true</option>
         <option value="false">false</option>
       </select>
-      <%# <input
+      <%#
+      <input
         type="text"
         name="powerbi_enabled"
         id="edit-powerbi_enabled"
         value=""
         class="text ui-widget-content ui-corner-all"
-      /> %>
+      />
+      %>
       <label for="powerbi_user">powerbi_user</label>
       <input
         type="text"
@@ -128,12 +139,8 @@
       />
 
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input 
-        type="submit" 
-        name="commit" 
-        value="Submit" 
-       />   
- </fieldset>
+      <!-- <input type="submit" name="commit" value="Submit" /> -->
+    </fieldset>
   </form>
 </div>
 
@@ -205,7 +212,8 @@
 
 <div id="users-contain" class="ui-widget">
   <h1>Existing Users:</h1>
-  <p><%= @test %><p>
+  <p><%= @test %></p>
+  <p></p>
 
   <table id="users" class="ui-widget ui-widget-content">
     <thead>
@@ -357,9 +365,6 @@
           allFields.removeClass("ui-state-error");
         },
       });
-
-
-      
     });
 
     var current_edit_row_details = {};
@@ -378,9 +383,22 @@
       tds[3].innerHTML = powerbi_enabled;
       tds[4].innerHTML = powerbi_user;
       tds[5].innerHTML = powerbi_password;
+      $("#form1").submit();
       edit_dialogs.dialog("close");
       return valid;
     }
+    $("#form1").submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: "/groups/versa_power_bi",
+        method: "POST",
+        data: $(this).serialize(),
+        success: function () {
+          console.log("SUCCESS!");
+        },
+      });
+    });
     $(document).on("click", ".edit-user", function () {
       var tds = $(this).closest("tr").children("td");
       //alert(tds[0].innerHTML)
@@ -398,7 +416,7 @@
       current_edit_row_details.powerbi_password = powerbi_password;
       current_edit_row_details.current_row = $(this).closest("tr");
       edit_dialogs.dialog("open");
-      
+
       //console.log(tds);
     });
   });
