@@ -231,11 +231,11 @@
       <% @users_data.values.each do |users_data| %>
       <tr>
         <td><%=users_data[1]%></td>
+        <td><%=users_data[3]%></td>
+        <td><%=users_data[4]%></td>
         <td><%=users_data[5]%></td>
         <td><%=users_data[6]%></td>
         <td><%=users_data[7]%></td>
-        <td><%=users_data[8]%></td>
-        <td><%=users_data[9]%></td>
         <td><button class="edit-user">EDIT</button></td>
       </tr>
       <%end%>
@@ -356,6 +356,7 @@
         width: 350,
         modal: true,
         buttons: {
+          "Edit user details": editUser,
           Cancel: function () {
             edit_dialogs.dialog("close");
           },
