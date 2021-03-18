@@ -1,129 +1,200 @@
-<style>
+<head>
+  <style>
+    body {
+      background: rgba(238, 238, 238, 0.788) no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Roboto";
+    }
+    h1 {
+      font-size: 2em;
+    }
+    #createUser,
+    #createGroup,
+    #editUser {
+      margin-top: 2em;
+    }
 
-body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
-table{
-   overflow-y:auto;
-   width: 400px;
-   height:400px;
-   display:block;
-}
-th {
-  background-color: #015a9e;
-  color: #fff;
-}
-tr:nth-child(odd)		{ background-color:#eee; }
-tr:nth-child(even)	{ background-color:#fff; }
+    #button {
+      cursor: pointer;
+      background: #44c4e7;
+      padding: 0.5em;
+      border: 0;
+      color: #fff;
+      font-family: "Roboto";
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+    }
+    #button1 {
+      cursor: pointer;
+      background: #6188a0;
+      padding: 0.5em;
+      border: 0;
+      color: #fff;
+      font-family: "Roboto";
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+    }
+    .tables {
+      width: 100%;
+      overflow-y: hidden;
+      overflow-x: auto;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 2em;
+      margin-left: 0;
+    }
+    table {
+      margin-left: 5em;
+      overflow-y: auto;
+      display: block;
+      float: left;
+      margin-top: 1em;
+      height: 50%;
+      width: auto;
+    }
 
-tr:hover            { background-color: #b3c7dc;}
-</style>
+    th {
+      background-color: #6188a0;
+      color: #fff;
+    }
+    tr:nth-child(odd) {
+      background-color: #ecf4f8;
+    }
+    tr:nth-child(even) {
+      background-color: #fff;
+    }
+
+    tr:hover {
+      background-color: #b3c7dc;
+    }
+    td,
+    th {
+      padding: 0.5em;
+    }
+    input {
+      border: none;
+      background: none;
+      text-decoration: underline;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+</head>
 <h1>Power BI Groups</h1>
+<div>
+    <%= link_to "Add PowerBI user to group",groups_createNewUser_path, :id=>"button" %>
 
-<table border="1" style="float: left;  margin-right: 200px">
-  <thead>
-    <tr>
-      <th>PowerBI Group ID</th>
-      <th>PowerBI Group name</th>
-    </tr>
-  </thead>
+    <%= link_to "Create New group",groups_createNewGroup_path, :id=>"button" %>
+    <%= @updated_groupID%> <%= @email%> <%= @role %>
 
-  <tbody>
-   <% @array.each do |array| %>
-      <tr style="border-bottom:1px solid black">
-          <td><%= form_tag groups_getAllGroups_path do |form| %>
-            <a class="field" hidden>
-              <%= label_tag :id %>
-              <%= text_field_tag :id, array['id'] %>
-            </a>
-              <%= submit_tag array['id'] %>
-          <% end %></td>
-          <td><%= array['name'] %></td>
-    <% end %>
-    
-  </tbody>
-</table>
-
-<%= form_with local: true, :url => groups_getAllGroups_path do |f| %>
-<table border="1" style="width: 550px">
-  <thead>  
-    <tr>
-        <th>PowerBI User name</th>
-        <th>Versa Company name</th>
-        <th>PowerBI Group Id</th>
-    </tr>
-  </thead>
-
-  <tbody data-no-turbolink="true">
-    <% @powerbi_users.values.each do |powerbi_users| %>
- 
-    <tr>
-      <td>
-        <a class="field" hidden>
-          <%= text_field_tag :user_id, powerbi_users[1] %>
-        </a>
-        <%=powerbi_users[1]%> 
-      </td>
-      <td>           
-          <%= f.select :company_name, @company_names.map { |company_names| [company_names['company_name'], company_names['company_name']]}, :selected => powerbi_users[0] %>
-      </td>
-      <td>
-      <div class="field">
-            <%= f.select :group_id, @array.map { |array| [array['name'], array['id']]}, :selected => powerbi_users[2] %>
-            <%= f.submit "Apply"%>
-      </div> 
-      </td>
-      </tr>
-    <% end %>
-    <% end %>
-    </tbody>
-    
-</table>
-<br>
-<br>
-<table border="1" >
-  <thead>
-    <tr>
-      <th>PowerBI Login User Name </th>
-      <th>PowerBI User Access Rights</th>
-    </tr>
-  </thead>
-
-  <tbody>
-     <% @userArray.each do |userArray| %>
-     <tr>
-        <td><%= userArray['displayName'] %></td>
-        <td><%= userArray['groupUserAccessRight'] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-
-  <% if(@reportArray!=nil)%>
-    <thead>
-      <tr>
-        <th>Users' Allowed Reports </th>
-        <th>Report IDs</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @reportArray.each do |reportArray| %>
-      <tr>
-        <td><%=reportArray['name'] %></td>
-        <td><%= reportArray['id'] %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  <% end %>
-
-</table>
-<br>
-
-
-<div id="createUser">
-  <%= link_to "Add PowerBI user to group",groups_createNewUser_path %>
+    <%= link_to "Edit Versa user",groups_versa_power_bi_path, :id=>"button" %>
+  </div>
 </div>
+<div class="tables">
+  <div id="table1">
+    <table>
+      <thead>
+        <tr>
+          <th>PowerBI Group ID</th>
+          <th>PowerBI Group name</th>
+        </tr>
+      </thead>
 
-<%= link_to "Create New group",groups_createNewGroup_path %>
+      <tbody>
+        <% @array.each do |array| %>
+        <tr>
+          <td>
+            <%= form_tag groups_getAllGroups_path do |form| %>
+            <a class="field" hidden>
+              <%= label_tag :id %> <%= text_field_tag :id, array['id'] %>
+            </a>
+            <%= submit_tag array['id'] %> <% end %>
+          </td>
+          <td><%= array['name'] %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<%= @updated_groupID%>
-<%= @email%>
-<%= @role%>
+  <div id="table2">
+    <table>
+      <thead>
+        <tr>
+          <th>PowerBI User name</th>
+          <th>Versa Company name</th>
+          <th>PowerBI Group Id</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody data-no-turbolink="true">
+        <%= form_with local: true, :url => groups_getAllGroups_path do |f| %> <%
+        @powerbi_users.values.each do |powerbi_users| %>
+
+        <tr>
+          <td>
+            <a class="field" hidden>
+              <%= text_field_tag :user_id, powerbi_users[1] %>
+            </a>
+            <%=powerbi_users[1]%>
+          </td>
+          <td>
+            <%= f.select :company_name, @company_names.map { |company_names|
+            [company_names['company_name'], company_names['company_name']]},
+            :selected => powerbi_users[0] %>
+          </td>
+          <td>
+            <div class="field">
+              <%= f.select :group_id, @array.map { |array| [array['name'],
+              array['id']]}, :selected => powerbi_users[2] %>
+            </div>
+          </td>
+          <td><%= f.submit "Apply", :id=>"button1" %></td>
+        </tr>
+        <% end %> <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="table3">
+    <table>
+      <thead>
+        <tr>
+          <th>PowerBI Login User Name</th>
+          <th>PowerBI User Access Rights</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @userArray.each do |userArray| %>
+        <tr>
+          <td><%= userArray['displayName'] %></td>
+          <td><%= userArray['groupUserAccessRight'] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+
+      <% if(@reportArray!=nil)%>
+      <thead>
+        <tr>
+          <th>Users Allowed Reports</th>
+          <th>Report IDs</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @reportArray.each do |reportArray| %>
+        <tr>
+          <td><%=reportArray['name'] %></td>
+          <td><%= reportArray['id'] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
