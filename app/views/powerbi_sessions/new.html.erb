@@ -1,29 +1,103 @@
-<% if session[:access_token] %>
-  <h1>Power BI</h1>
-  <p><%= "Authorization Successful! You are now in Power BI." %> </p>
-  <br/>
-  <%= link_to "Listing - All reports for me",powerbi_list_all_reports_path %>
-  <br/>
-  <%= link_to "Open Report - New Window",powerbi_report_path %>
-  <br/>
-  <%= link_to "Open Report - Embeded",powerbi_embed_report_path %>
-  <br/>
-  <%= link_to "Listing - Tabular form",powerbi_list_all_report_path %>
-  <br/>
-  <%= link_to "groups",groups_getAllGroups_path %>
-<% else %>
-  <h1>enter powerbi credentials</h1>
-  <%= form_tag powerbi_path do |form| %>
-    <div class="field">
-      <%= label_tag :email %>
-      <%= text_field_tag :email %>
-    </div>
-    <div class="field">
-      <%= label_tag :password %>
-      <%= password_field_tag :password %>
-    </div>
-    <div class="actions">
-      <%= submit_tag "generate token" %>
-    </div> 
-  <% end %>
-<% end %>
+<html>
+
+<head>
+  <title>Power BI</title>
+  <style>
+    body {
+      background: rgba(238, 238, 238, 0.788) no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Roboto";
+    }
+    h1 {
+      font-size: 2em;
+    }
+
+    #login {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: #fff;
+      width: 285px;
+      margin: -140px 0 0 -182px;
+      padding: 40px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      line-height: 1;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    input {
+      outline: none;
+      display: block;
+      width: 100%;
+      margin: 0 0 20px;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      font-family: "Roboto";
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    #button {
+      cursor: pointer;
+      background: #44c4e7;
+      width: 100%;
+      padding: 10px 15px;
+      border: 0;
+      color: #fff;
+      font-family: "Roboto";
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+    }
+    #button :hover {
+      background: #369cb8;
+    }
+    }
+  </style>
+</head>
+
+<body>
+  <% if session[:access_token] %>
+  <h1> Power BI </h1>
+    <p>
+      <%= "Authorization Successful! You are now in Power BI." %>
+    </p>
+  <div>
+    <%= link_to "Listing - All reports for me" ,powerbi_list_all_reports_path, :id=> "button" %>
+ 
+    <%= link_to "Open Report - New Window" ,powerbi_report_path, :id=> "button" %>
+ 
+    <%= link_to "Open Report - Embeded" ,powerbi_embed_report_path, :id=> "button" %>
+ 
+    <%= link_to "Listing - Tabular form" ,powerbi_list_all_report_path, :id=> "button" %>
+ 
+    <%= link_to "Power BI admin page" ,groups_getAllGroups_path, :id=> "button" %>
+  </div>
+
+  <% else %>
+  <div id="login">
+      <h2>Enter PowerBI credentials</h1>
+      <%= form_tag powerbi_path do |form| %>
+      <div class="field">
+        <%= label_tag :email %>
+        <%= text_field_tag :email %>
+      </div>
+      <div class="field">
+        <%= label_tag :password %>
+        <%= password_field_tag :password %>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Login" , :id=> "button" %>
+      </div>
+      <% end %>
+  </div>
+    <% end %>
+</body>
+
+</html>
