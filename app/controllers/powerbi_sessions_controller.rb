@@ -33,6 +33,9 @@ class PowerbiSessionsController < ApplicationController
         access_token= array[:access_token]
         # @@access_token= @array[:access_token]
         session[:access_token] =  access_token
+        @url = "https://api.powerbi.com/v1.0/myorg/reports"
+        @request = HTTParty.get(@url, :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
+        @array = @request['value']
        # end
     end
   

@@ -58,8 +58,23 @@
     #button :hover {
       background: #369cb8;
     }
+
+    #embedContainer{
+        margin-top: 2em;
+        margin-left:20%;
+        text-align: center;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 20px;
+        width: 60%;
     }
   </style>
+  <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
+  <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -78,8 +93,9 @@
     <%= link_to "Listing - Tabular form" ,powerbi_list_all_report_path, :id=> "button" %>
  
     <%= link_to "Power BI admin page" ,groups_getAllGroups_path, :id=> "button" %>
-  </div>
 
+  </div>
+  <div id="embedContainer" class="embed-Container" ></div>
   <% else %>
   <div id="login">
       <h2>Enter PowerBI credentials</h1>
@@ -99,5 +115,65 @@
   </div>
     <% end %>
 </body>
+<script type="text/javascript">
+<% if @array %>
 
+  $(document).ready(function() {
+      var models = window['powerbi-client'].models;
+      console.log(embedContainer);
+      var i = 0;
+      var listofReport = [];
+      <% @array.each do |array| %>
+            listofReport[i] = "<%= array['id']%>";
+            i = i+1;
+      <% end %>
+
+      var report = [];
+
+      for(i=0; i< listofReport.length; i++){
+           var config = {
+          type: 'report',
+          tokenType: models.TokenType.AAD,
+          accessToken: '<%= session[:access_token] %>',
+          embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=#{listofReport[i]}',
+          id: listofReport[i],
+          permissions: models.Permissions.All,
+          settings: {
+              panes: {
+                  filters: {
+                      visible: false
+                  },
+                  pageNavigation: {
+                      visible: true
+                  }
+              }
+          }
+      };
+      console.log(config.id);
+     $('#embedContainer').append("<div class='report' id='report" + i + "'>" + "</div>" );
+     var embedContainer = $('#report'+i)[0];
+      var report = powerbi.embed(embedContainer, config);
+  
+      report.off("loaded");
+      
+      report.on("loaded", function () {
+          console.log("Loaded");
+      });
+      
+      report.off("rendered");
+      
+      report.on("rendered", function () {
+          console.log("Rendered");
+      });
+      
+      report.on("error", function (event) {
+          console.log(event.detail);
+      
+          report.off("error");
+      });
+
+  }
+  });
+    <% end %> 
+</script>
 </html>
