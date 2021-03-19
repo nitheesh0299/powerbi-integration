@@ -117,7 +117,7 @@ class GroupsController < ApplicationController
         :headers => {:Authorization=> "Bearer #{session[:access_token]}"})
   end
   def versa_power_bi
-    @users_data = ActiveRecord::Base.connection.execute("SELECT * FROM users")
+    @users_data = ActiveRecord::Base.connection.execute("SELECT email,companyid,role,powerbi_enabled,powerbi_user,powerbi_password FROM users")
 
     @email = params[:email]
     @powerbi_enabled=params[:powerbi_enabled]

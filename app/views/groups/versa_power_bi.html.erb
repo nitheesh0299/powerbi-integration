@@ -230,12 +230,12 @@
     <tbody data-no-turbolink="true">
       <% @users_data.values.each do |users_data| %>
       <tr>
+        <td><%=users_data[0]%></td>
         <td><%=users_data[1]%></td>
+        <td><%=users_data[2]%></td>
         <td><%=users_data[3]%></td>
         <td><%=users_data[4]%></td>
         <td><%=users_data[5]%></td>
-        <td><%=users_data[6]%></td>
-        <td><%=users_data[7]%></td>
         <td><button class="edit-user">EDIT</button></td>
       </tr>
       <%end%>
@@ -243,7 +243,6 @@
   </table>
 </div>
 
-<button id="create-user">Create new user</button>
 
 <script type="text/javascript">
   $(function () {
