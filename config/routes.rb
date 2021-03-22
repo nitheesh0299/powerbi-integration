@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   post 'groups/createNewUser', to:'groups#createNewUser'
   get 'groups/versa_power_bi', to:'groups#versa_power_bi'
   post 'groups/versa_power_bi', to:'groups#versa_power_bi'
+  get 'powerbi/userpowerbi', to:'powerbi_sessions#userpowerbi'
 end

@@ -1,0 +1,161 @@
+<html>
+
+<head>
+  <title>Power BI</title>
+  <style>
+    body {
+      background: rgba(238, 238, 238, 0.788) no-repeat center center fixed;
+      background-size: cover;
+      font-family: "Roboto";
+    }
+    h1 {
+      font-size: 2em;
+    }
+
+    #login {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: #fff;
+      width: 285px;
+      margin: -140px 0 0 -182px;
+      padding: 40px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      line-height: 1;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    input {
+      outline: none;
+      display: block;
+      width: 100%;
+      margin: 0 0 20px;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      font-family: "Roboto";
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    #button {
+      cursor: pointer;
+      background: #44c4e7;
+      width: 100%;
+      padding: 10px 15px;
+      border: 0;
+      color: #fff;
+      font-family: "Roboto";
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+    }
+    #button :hover {
+      background: #369cb8;
+    }
+
+    #embedContainer{
+        margin-top: 1.5em;
+        margin-left:20%;
+        text-align: center;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 20px;
+        width: 60%;
+    }
+  </style>
+  <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
+  <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+  <h1> Power BI </h1>
+    <p>
+      <%= "Authorization Successful! You are now in Power BI." %>
+    </p>
+  <div>
+    <%= link_to "Listing - All reports for me" ,powerbi_list_all_reports_path, :id=> "button" %>
+ 
+    <%= link_to "Open Report - New Window" ,powerbi_report_path, :id=> "button" %>
+ 
+    <%= link_to "Open Report - Embeded" ,powerbi_embed_report_path, :id=> "button" %>
+ 
+    <%= link_to "Listing - Tabular form" ,powerbi_list_all_report_path, :id=> "button" %>
+ 
+    <%= link_to "Power BI admin page" ,groups_getAllGroups_path, :id=> "button" %>
+
+  </div>
+  <div id="embedContainer" class="embed-Container" ></div>
+</body>
+
+<script type="text/javascript">
+<% if @array %>
+
+  $(document).ready(function() {
+      var models = window['powerbi-client'].models;
+      console.log(embedContainer);
+      var i = 0;
+      var listofReport = [];
+      <% @array.each do |array| %>
+            listofReport[i] = "<%= array['id']%>";
+            i = i+1;
+      <% end %>
+
+      var report = [];
+
+      for(i=0; i< listofReport.length; i++){
+           var config = {
+          type: 'report',
+          tokenType: models.TokenType.AAD,
+          accessToken: '<%= session[:access_token] %>',
+          embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=#{listofReport[i]}',
+          id: listofReport[i],
+          permissions: models.Permissions.All,
+          settings: {
+              panes: {
+                  filters: {
+                      visible: false
+                  },
+                  pageNavigation: {
+                      visible: true
+                  }
+              }
+          }
+      };
+      console.log(config.id);
+     $('#embedContainer').append("<div class='report' id='report" + i + "'>" + "</div>" );
+     var embedContainer = $('#report'+i)[0];
+      var report = powerbi.embed(embedContainer, config);
+  
+      report.off("loaded");
+      
+      report.on("loaded", function () {
+          console.log("Loaded");
+      });
+      
+      report.off("rendered");
+      
+      report.on("rendered", function () {
+          console.log("Rendered");
+      });
+      
+      report.on("error", function (event) {
+          console.log(event.detail);
+      
+          report.off("error");
+      });
+
+  }
+  });
+    <% end %> 
+</script>
+</html>
