@@ -67,6 +67,24 @@
         grid-template-columns: auto auto auto;
         grid-gap: 20px;
         width: 60%;
+        position: relative;
+    }
+
+    .report {
+      position: relative;
+    }
+
+    #overlayContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background:transparent;
+      z-index: 99;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 20px;
+      width: 100%;
+      height: 100%;
     }
   </style>
   <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/jquery/dist/jquery.js"></script>
@@ -94,7 +112,11 @@
     <%= link_to "Power BI admin page" ,groups_getAllGroups_path, :id=> "button" %>
 
   </div>
-  <div id="embedContainer" class="embed-Container" ></div>
+  <div id="embedContainer" class="embed-Container" >
+    <div id="overlayContainer"></div>
+  </div>
+
+  <div id="embedContainerDialog"></div>
 </body>
 
 <script type="text/javascript">
@@ -102,18 +124,17 @@
 
   $(document).ready(function() {
       var models = window['powerbi-client'].models;
-      console.log(embedContainer);
       var i = 0;
       var listofReport = [];
+      var config = [];
       <% @array.each do |array| %>
             listofReport[i] = "<%= array['id']%>";
             i = i+1;
       <% end %>
 
-      var report = [];
 
       for(i=0; i< listofReport.length; i++){
-           var config = {
+          config[i] = {
           type: 'report',
           tokenType: models.TokenType.AAD,
           accessToken: '<%= session[:access_token] %>',
@@ -131,10 +152,10 @@
               }
           }
       };
-      console.log(config.id);
      $('#embedContainer').append("<div class='report' id='report" + i + "'>" + "</div>" );
-     var embedContainer = $('#report'+i)[0];
-      var report = powerbi.embed(embedContainer, config);
+      $('#overlayContainer').append("<div class='overlayDiv' id='" + i + "'></div>" );
+      var curReport = $('#report'+i)[0];
+      var report = powerbi.embed(curReport, config[i]);
   
       report.off("loaded");
       
@@ -155,6 +176,13 @@
       });
 
   }
+  document.querySelector("#overlayContainer").addEventListener("click", function (e) {
+        var dialogId = e.target.id;
+        var embedContainerDialog = $("#embedContainerDialog")[0];
+        var report = powerbi.embed(embedContainerDialog, config[dialogId]);
+               ($("#embedContainerDialog").dialog("isOpen") == false) ? $("#embedContainerDialog").dialog("open") : $("#embedContainerDialog").dialog("close") ;  
+            });  
+            $("#embedContainerDialog").dialog({autoOpen: false});  
   });
     <% end %> 
 </script>
