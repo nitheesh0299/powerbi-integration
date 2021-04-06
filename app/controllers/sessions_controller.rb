@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   	user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      session[:company_id] = user.companyId
+      session[:company_id] = user.companyid
       session[:role] = user.role
       puts session[:email_id]
       redirect_to root_url, notice: "Logged in!"
@@ -19,7 +19,6 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     session[:company_id] = nil
-    # $access_token=nil
     redirect_to root_url, notice: "Logged out!"
   end
 end
